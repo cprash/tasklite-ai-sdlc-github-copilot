@@ -1,0 +1,36 @@
+[
+  {
+    "method": "DELETE",
+    "path": "/api/tasks/:id",
+    "description": "Delete a task permanently.",
+    "requestFields": []
+  },
+  {
+    "method": "GET",
+    "path": "/api/health",
+    "description": "Health check, returns the service status.",
+    "requestFields": []
+  },
+  {
+    "method": "GET",
+    "path": "/api/tasks",
+    "description": "List all tasks, newest first.",
+    "requestFields": []
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/tasks/:id/status",
+    "description": "Update a task's status to OPEN or COMPLETED.",
+    "requestFields": [
+      "status:enum:true"
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/api/tasks",
+    "description": "Create a task with a required title.",
+    "requestFields": [
+      "title:string:true"
+    ]
+  }
+]
