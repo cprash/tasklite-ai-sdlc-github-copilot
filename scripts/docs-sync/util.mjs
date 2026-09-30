@@ -92,9 +92,10 @@ export function extractResponses(bodyText) {
     .map(([status, meaning]) => ({ status, meaning }));
 }
 
+// Compares ignoring CRLF/LF so a platform/git line-ending normalization alone never counts as a change.
 export function writeFileIfChanged(filePath, content) {
   const existing = existsSync(filePath) ? readFileSync(filePath, "utf8") : null;
-  if (existing === content) return false;
+  if (existing !== null && existing.replace(/\r\n/g, "\n") === content.replace(/\r\n/g, "\n")) return false;
   writeFileSync(filePath, content, "utf8");
   return true;
 }

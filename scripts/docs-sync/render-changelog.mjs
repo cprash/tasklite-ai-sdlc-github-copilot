@@ -51,15 +51,20 @@ export function renderChangelogEntry(diff, dateOrString) {
 }
 
 // Inserts the entry right after the "## [Unreleased]" heading line, creating it if it doesn't exist.
-// Anchored to a whole line so the marker text appearing in prose elsewhere isn't matched.
+// Anchored to a whole line (and its own newline only) so trailing blank lines aren't swallowed into
+// the match and prose mentioning the marker elsewhere isn't matched.
 export function patchChangelog(changelogContent, entryMarkdown) {
-  const headingRe = /^## \[Unreleased\][ \t]*$/m;
+  const headingRe = /^## \[Unreleased\][^\n]*\r?\n/m;
   const match = headingRe.exec(changelogContent);
+  const entry = entryMarkdown.trim();
+
   if (!match) {
-    return `${changelogContent.trim()}\n\n## [Unreleased]\n\n${entryMarkdown}`;
+    return `${changelogContent.trim()}\n\n## [Unreleased]\n\n${entry}\n`;
   }
-  const insertAt = match.index + match[0].length;
-  const before = changelogContent.slice(0, insertAt);
-  const after = changelogContent.slice(insertAt).replace(/^\n+/, "\n");
-  return `${before}\n\n${entryMarkdown}${after}`;
+
+  const headingEnd = match.index + match[0].length;
+  const before = changelogContent.slice(0, headingEnd);
+  const remainder = changelogContent.slice(headingEnd).replace(/^(\r?\n)+/, "");
+
+  return remainder.length > 0 ? `${before}\n${entry}\n\n${remainder}` : `${before}\n${entry}\n`;
 }
