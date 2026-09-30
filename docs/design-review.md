@@ -24,3 +24,13 @@ Reviewer: GitHub Copilot (acting as senior reviewer), evaluating `architecture.m
 ## Architecture Updates Made
 
 - `docs/architecture.md`: added the App Mount Extractor component to the component table and flow diagram, and updated the route extractor's responsibility to consume prefixes from it instead of assuming `/api`.
+
+---
+
+## Story: 2026-09-30 — Update an existing task's title (PATCH /api/tasks/:id)
+
+| # | Area | Finding | Severity | Resolution |
+|---|------|---------|----------|------------|
+| 7 | Response completeness | Live-tested docs-sync against this new endpoint and found `docs/API.md` was missing the `200` response for both this endpoint and the pre-existing `PATCH /api/tasks/:id/status`, because the implicit-200 fallback only applied when no other response was found. | Medium | Fixed in `extractResponses` (see architecture.md); regression test added in `extract-controllers.test.mjs`. |
+| 8 | DRY / consistency | `updateTaskTitle` was checked against `updateTaskStatus` for structural consistency (id parsing, `safeParse`, `P2025` → 404 mapping). No duplication introduced beyond the already-established convention. | None (validated, no change) | — |
+| 9 | Test coverage | Backend had no working test command before this story (`echo ... && exit 1` placeholder). | Medium | Added a real vitest suite (4 tests) and fixed `tsconfig.json` to exclude `*.test.ts` from `tsc` output (a stray compiled test file in `dist/` was otherwise picked up by vitest). |

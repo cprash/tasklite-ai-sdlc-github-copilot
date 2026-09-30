@@ -75,3 +75,11 @@ Snapshot file (`docs/.docs-sync-snapshot.json`): array of `{ method, path, descr
 ## Out of Scope (carried from requirements.md)
 
 - CI enforcement, OpenAPI generation, frontend documentation.
+
+---
+
+## Story: 2026-09-30 — Update an existing task's title (PATCH /api/tasks/:id)
+
+No new pipeline components were needed — the new endpoint follows the exact same route → controller → validator shape the architecture already assumes. One real fix to the existing design:
+
+- **Response extractor bug**: the response-status extractor's implicit-`200` fallback only fired when it was the *only* response found for a handler (`responses.size === 0`). Any handler that both throws an `HttpError` and returns a bare `res.json(...)` (e.g. `updateTaskTitle`, and the pre-existing `updateTaskStatus`) was silently missing its `200` in `docs/API.md`. Fixed in `scripts/docs-sync/util.mjs`'s `extractResponses`: a bare `res.json(...)` now always implies `200` regardless of what else was found, since the literal substring `res.json(` never appears inside a `res.status(n).json(...)` chain (safe to detect independently).

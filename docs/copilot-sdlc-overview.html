@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TaskLite — Agentic SDLC &amp; Automated Documentation Sync</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #161923;
+    --panel-border: #262b3a;
+    --text: #e6e8ee;
+    --muted: #9aa3b8;
+    --accent: #6ea8fe;
+    --accent-2: #7ee2b8;
+    --code-bg: #0b0d12;
+    --warn: #f0b429;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  header {
+    padding: 48px 24px 32px;
+    text-align: center;
+    background: linear-gradient(180deg, #1a1f2e, var(--bg));
+    border-bottom: 1px solid var(--panel-border);
+  }
+  header h1 { margin: 0 0 8px; font-size: 2rem; }
+  header p { margin: 0; color: var(--muted); font-size: 1.05rem; }
+  .badges { margin-top: 18px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .badge {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    color: var(--accent-2);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+  }
+  main { max-width: 980px; margin: 0 auto; padding: 32px 24px 80px; }
+  section { margin-bottom: 48px; }
+  h2 {
+    font-size: 1.4rem;
+    border-left: 4px solid var(--accent);
+    padding-left: 12px;
+    margin-bottom: 20px;
+  }
+  h3 { font-size: 1.1rem; color: var(--accent-2); margin-top: 28px; }
+  p { color: var(--text); }
+  .muted { color: var(--muted); }
+  code {
+    background: var(--code-bg);
+    border: 1px solid var(--panel-border);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #ffd479;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+  }
+  pre code { border: none; padding: 0; background: none; color: #b7f5c9; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--panel-border);
+    font-size: 0.92rem;
+    vertical-align: top;
+  }
+  th { color: var(--accent-2); font-weight: 600; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin: 20px 0;
+  }
+  .flow .step {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+  .flow .arrow { color: var(--muted); }
+  .pill-ok { color: var(--accent-2); }
+  .pill-warn { color: var(--warn); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
+  footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--panel-border);
+  }
+  .toc { columns: 2; column-gap: 32px; }
+  @media (max-width: 700px) { .toc { columns: 1; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>TaskLite — Agentic SDLC in Practice</h1>
+  <p>How GitHub Copilot Chat/Agent drove the full software delivery lifecycle for the "Automated Documentation Sync" capstone use case.</p>
+  <div class="badges">
+    <span class="badge">8/8 SDLC steps complete</span>
+    <span class="badge">2 PRs merged/opened</span>
+    <span class="badge">17 automated tests</span>
+    <span class="badge">0 new dependencies</span>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <h2>Contents</h2>
+  <div class="toc">
+    <p><a href="#overview">1. Overview</a></p>
+    <p><a href="#sdlc">2. The 8-Step Agentic SDLC</a></p>
+    <p><a href="#copilot-assets">3. GitHub Copilot Assets Created</a></p>
+    <p><a href="#how-it-works">4. How Automated Documentation Sync Works</a></p>
+    <p><a href="#stories">5. Stories Delivered</a></p>
+    <p><a href="#testing">6. Test Evidence</a></p>
+    <p><a href="#limitations">7. Known Limitations</a></p>
+  </div>
+</section>
+
+<section id="overview">
+  <h2>1. Overview</h2>
+  <p>
+    TaskLite is a small Express + TypeScript + Prisma/SQLite backend with a React + TypeScript + Vite frontend.
+    The capstone exercise was to build a feature — <strong>Automated Documentation Sync</strong> — entirely
+    through GitHub Copilot Agent Mode, driven by explicit Copilot customization (instructions, skills, prompts)
+    rather than ad-hoc chat requests, and to run every change through the full Agentic SDLC: requirements →
+    architecture → design review → implementation plan → implementation → review → verify → PR.
+  </p>
+  <p class="muted">
+    The result is a dependency-free Node.js tool (<code>npm run docs:sync</code>) that regenerates
+    <code>docs/API.md</code>, the README's API table, and <code>CHANGELOG.md</code> directly from the backend's
+    routes, controllers, and Zod validators — so documentation can never silently drift from the code.
+  </p>
+</section>
+
+<section id="sdlc">
+  <h2>2. The 8-Step Agentic SDLC</h2>
+  <table>
+    <tr><th>Step</th><th>Artifact / Action</th><th>Where</th></tr>
+    <tr><td>1. Requirements</td><td>Clarified scope with the user (full doc suite, manual trigger), captured functional/non-functional requirements</td><td><a href="requirements.md">docs/requirements.md</a></td></tr>
+    <tr><td>2. Architecture</td><td>Pipeline design (extractors → endpoint model → renderers), technology choices, mermaid flow diagram</td><td><a href="architecture.md">docs/architecture.md</a></td></tr>
+    <tr><td>3. Design Review</td><td>Acted as senior reviewer against the architecture; caught a route-prefix bug <em>before</em> writing code</td><td><a href="design-review.md">docs/design-review.md</a></td></tr>
+    <tr><td>4. Implementation Plan</td><td>Dependency-ordered task list, explicitly marking blocked tasks</td><td><a href="impl-plan.md">docs/impl-plan.md</a></td></tr>
+    <tr><td>5. Implementation</td><td>Built the extractor/renderer pipeline, added source-of-truth doc comments to controllers</td><td><code>scripts/docs-sync/</code></td></tr>
+    <tr><td>6. Review</td><td>Self-review against a checklist (correctness, security, error handling, tests, clarity, DRY, dependency safety) — found and fixed a real DRY violation</td><td>Chat record / commit history</td></tr>
+    <tr><td>7. Verify</td><td>13→14 automated tests + a live round-trip manual test that caught 2 real bugs before merge</td><td><code>scripts/docs-sync/*.test.mjs</code></td></tr>
+    <tr><td>8. PR</td><td>Summary, changes made, test evidence, known limitations, reviewer checklist</td><td><a href="https://github.com/cprash/tasklite-ai-sdlc-github-copilot/pull/1">PR #1</a>, <a href="https://github.com/cprash/tasklite-ai-sdlc-github-copilot/pull/2">PR #2</a></td></tr>
+  </table>
+</section>
+
+<section id="copilot-assets">
+  <h2>3. GitHub Copilot Assets Created</h2>
+  <p>Everything below lives under <code>.github/</code> and is picked up automatically by GitHub Copilot Chat/Agent Mode in this workspace.</p>
+
+  <h3>Global instructions</h3>
+  <table>
+    <tr><th>File</th><th>Type</th><th>Purpose</th></tr>
+    <tr>
+      <td><code>.github/copilot-instructions.md</code></td>
+      <td>Always-on repo rules</td>
+      <td>Architecture summary, build/test commands, and pointers to the path-specific instructions and SDLC artifacts. Loaded for every request in this workspace.</td>
+    </tr>
+  </table>
+
+  <h3>Path-specific instructions</h3>
+  <table>
+    <tr><th>File</th><th>Applies to</th><th>Purpose</th></tr>
+    <tr>
+      <td><code>.github/instructions/api.instructions.md</code></td>
+      <td><code>backend/src/**</code></td>
+      <td>Route/controller/validator shape conventions — critically, the rule that every controller needs a one-line leading comment, because docs-sync reads that comment as the documentation source of truth.</td>
+    </tr>
+    <tr>
+      <td><code>.github/instructions/frontend.instructions.md</code></td>
+      <td><code>frontend/src/**</code></td>
+      <td>Enforces calling the API only through <code>services/taskApi.ts</code>, shared typing conventions, component structure.</td>
+    </tr>
+  </table>
+
+  <h3>Skills</h3>
+  <table>
+    <tr><th>File</th><th>Purpose</th></tr>
+    <tr>
+      <td><code>.github/skills/docs-sync/SKILL.md</code></td>
+      <td>
+        On-demand workflow package for the documentation sync feature: when to use it, how the pipeline works,
+        and the exact procedure (add a comment → run <code>npm run docs:sync</code> → review the console
+        summary → commit the regenerated docs). Discoverable whenever routes/controllers/validators change.
+      </td>
+    </tr>
+  </table>
+
+  <h3>Prompts</h3>
+  <table>
+    <tr><th>File</th><th>Purpose</th></tr>
+    <tr>
+      <td><code>.github/prompts/create-pr.prompt.md</code></td>
+      <td>
+        Reusable <code>/create-pr</code> template that generates the Step 8 PR description (Summary, Changes
+        Made, Test Evidence, Known Limitations, Reviewer Checklist) from the current branch's diff and test run.
+      </td>
+    </tr>
+  </table>
+
+  <p class="muted">
+    Not created: a custom <code>.github/agents/*.agent.md</code> persona or a root <code>AGENTS.md</code>.
+    A dedicated agent wasn't needed for this scope, and pairing <code>copilot-instructions.md</code> with
+    <code>AGENTS.md</code> is a documented anti-pattern (duplicate global instructions) — only one global
+    instruction file is kept.
+  </p>
+</section>
+
+<section id="how-it-works">
+  <h2>4. How Automated Documentation Sync Works</h2>
+  <div class="flow">
+    <span class="step">app.ts mounts</span><span class="arrow">→</span>
+    <span class="step">routes/*.routes.ts</span><span class="arrow">→</span>
+    <span class="step">controllers/*.controller.ts</span><span class="arrow">→</span>
+    <span class="step">validators/*.validators.ts</span><span class="arrow">→</span>
+    <span class="step">endpoint model</span><span class="arrow">→</span>
+    <span class="step">docs/API.md + README table + CHANGELOG.md</span>
+  </div>
+  <p>
+    Run with <code>npm run docs:sync</code> from the repo root. It is pure static text parsing over Node.js
+    built-ins — no new npm dependencies, no database connection, no dynamic <code>import()</code>/execution of
+    backend code. Each controller function's <em>leading <code>//</code> comment</em> is the description shown
+    in the docs; each route's Zod validator is introspected for its request-body field list; response statuses
+    are read from <code>res.status(n)</code>/<code>HttpError(n, msg)</code> calls (plus implicit <code>200</code>
+    for a bare <code>res.json(...)</code>).
+  </p>
+  <p>
+    Changes are snapshot-diffed (<code>docs/.docs-sync-snapshot.json</code>) so re-running with no source changes
+    is fully idempotent, and the README's API table is patched in place between
+    <code>&lt;!-- docs-sync:api-table:start/end --&gt;</code> markers so hand-written prose elsewhere is untouched.
+  </p>
+</section>
+
+<section id="stories">
+  <h2>5. Stories Delivered</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="margin-top:0">PR #1 — Automated Documentation Sync</h3>
+      <p class="muted">The capstone feature itself: the docs-sync tool, its tests, and the full SDLC artifact set.</p>
+      <p><a href="https://github.com/cprash/tasklite-ai-sdlc-github-copilot/pull/1">View PR #1</a> · <span class="pill-ok">merged</span></p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">PR #2 — PATCH /api/tasks/:id</h3>
+      <p class="muted">[EPMCDMETST-66640] Update an existing task's title, with validation — used as a live test of docs-sync against a real new story. Also fixed a docs-sync bug (missing implicit 200 responses) found during that test.</p>
+      <p><a href="https://github.com/cprash/tasklite-ai-sdlc-github-copilot/pull/2">View PR #2</a> · <span class="pill-warn">open</span></p>
+    </div>
+  </div>
+</section>
+
+<section id="testing">
+  <h2>6. Test Evidence</h2>
+  <pre><code>&gt; node --test "scripts/**/*.test.mjs"
+tests 14, pass 14, fail 0
+
+&gt; cd backend &amp;&amp; npm test   (vitest run)
+Test Files  1 passed (1)
+Tests       4 passed (4)
+
+&gt; cd backend &amp;&amp; npm run build   (tsc)
+(clean, no errors)
+
+&gt; npm run docs:sync   (run twice in a row on a clean tree)
+docs-sync: processed 6 endpoint(s).
+  docs/API.md ... unchanged
+  README.md ..... unchanged
+  CHANGELOG.md .. unchanged
+docs-sync: no documentation changes detected.</code></pre>
+  <p class="muted">
+    Two real bugs were found and fixed only because of a manual live round-trip test (adding then removing a
+    field to watch the tool react): a changelog double-blank-line formatting bug, and a false-positive "changed"
+    report caused by CRLF/LF normalization on Windows checkouts.
+  </p>
+</section>
+
+<section id="limitations">
+  <h2>7. Known Limitations</h2>
+  <ul>
+    <li>Trigger is manual only (<code>npm run docs:sync</code>) — CI enforcement of doc staleness was explicitly deferred.</li>
+    <li>Parser is static-text based, tailored to this repo's current route/controller/validator shape (one route registration per statement, flat <code>z.object({...})</code> schemas).</li>
+    <li>Frontend components and non-HTTP internals are not documented by this tool.</li>
+    <li>No OpenAPI/Swagger output — Markdown only.</li>
+    <li>The changelog snapshot tracks <code>{method, path, description, requestFields}</code> only, so response-list-only changes don't produce a changelog entry.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  Generated for the GitHub Copilot Capstone Project — TaskLite. See <code>docs/requirements.md</code>,
+  <code>docs/architecture.md</code>, <code>docs/design-review.md</code>, and <code>docs/impl-plan.md</code> for the full detail behind this summary.
+</footer>
+
+</body>
+</html>

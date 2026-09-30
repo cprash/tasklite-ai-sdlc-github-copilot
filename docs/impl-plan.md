@@ -29,3 +29,17 @@ Ordered by dependency — each task lists what it's blocked by.
 - Task 5 is blocked until Task 4 — the controller extractor needs to know valid schema names to correctly detect `<schema>.safeParse(...)` usage.
 - Task 6 (and everything after it) is blocked until both extractor branches (routes+controllers, and validators feeding into controllers) are done.
 - Task 12 (tests) is blocked until the implementation exists to exercise.
+
+---
+
+## Story: 2026-09-30 — Update an existing task's title (PATCH /api/tasks/:id)
+
+| # | Task | Depends On | Status |
+|---|------|-------------|--------|
+| 14 | Add `updateTaskTitleSchema` to `task.validators.ts`. | — | Done |
+| 15 | Add `updateTaskTitle` controller (mirrors `updateTaskStatus`), with its required leading comment. | Task 14 | Done |
+| 16 | Register `PATCH /tasks/:id` → `updateTaskTitle` in `tasks.routes.ts`. | Task 15 | Done |
+| 17 | Add a backend vitest suite for `updateTaskTitle`; wire up `backend`'s `test` script (was a placeholder). | Task 15 | Done |
+| 18 | Fix `tsconfig.json` to exclude `*.test.ts` from the build so vitest doesn't double-run compiled tests from `dist/`. | Task 17 | Done |
+| 19 | Fix the docs-sync implicit-`200` gap found while live-testing this story (design-review.md finding #7). | Task 16 | Done |
+| 20 | Run `npm run docs:sync`; verify `docs/API.md`, README table, and `CHANGELOG.md` all update correctly. | Tasks 16, 19 | Done |

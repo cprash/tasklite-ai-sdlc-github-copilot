@@ -47,3 +47,19 @@ TaskLite's documentation (`README.md` API table, no dedicated API reference, no 
 - All 4 current endpoints (`GET /api/health`, `GET /api/tasks`, `POST /api/tasks`, `PATCH /api/tasks/:id/status`, `DELETE /api/tasks/:id`) appear correctly in the generated docs with accurate methods, paths, and request schemas.
 - Adding a new route/controller/validator and re-running the script picks it up automatically with no manual doc edits required.
 - Automated tests cover: happy path generation, an endpoint with no leading comment (fallback), and a validator field with an enum constraint.
+
+---
+
+## Story: 2026-09-30 — [EPMCDMETST-66640] Update an existing task's title
+
+### Requirement
+
+- Add `PATCH /api/tasks/:id` to update an existing task's `title`.
+- Request body: `{ "title": string }`, non-empty after trimming (same rule as create).
+- Responses: `200` with the updated task on success, `400` if the title is missing/empty, `404` if the task id doesn't exist or isn't numeric.
+
+### Impact on this feature (Automated Documentation Sync)
+
+- Used as the first live test of docs-sync against a real new endpoint (not a synthetic demo). Confirmed FR-2/FR-3/FR-4 all worked automatically with zero manual doc edits.
+- Surfaced a real gap: FR-2 ("possible response statuses") was not fully met — a bare `res.json(...)` alongside thrown `HttpError`s wasn't reporting its implicit `200`. Fixed in `scripts/docs-sync/util.mjs`; see design-review.md for the finding and impl-plan.md for the follow-up task.
+- Endpoint count in Acceptance Criteria above is now 6 (this endpoint plus the pre-existing 5).
