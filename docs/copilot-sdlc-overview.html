@@ -125,7 +125,8 @@
   <p>How GitHub Copilot Chat/Agent drove the full software delivery lifecycle for the "Automated Documentation Sync" capstone use case.</p>
   <div class="badges">
     <span class="badge">8/8 SDLC steps complete</span>
-    <span class="badge">2 PRs merged/opened</span>
+    <span class="badge">2 PRs (1 merged, 1 open)</span>
+    <span class="badge">Living docs: API + UI</span>
     <span class="badge">17 automated tests</span>
     <span class="badge">0 new dependencies</span>
   </div>
@@ -138,11 +139,12 @@
   <div class="toc">
     <p><a href="#overview">1. Overview</a></p>
     <p><a href="#sdlc">2. The 8-Step Agentic SDLC</a></p>
-    <p><a href="#copilot-assets">3. GitHub Copilot Assets Created</a></p>
-    <p><a href="#how-it-works">4. How Automated Documentation Sync Works</a></p>
-    <p><a href="#stories">5. Stories Delivered</a></p>
-    <p><a href="#testing">6. Test Evidence</a></p>
-    <p><a href="#limitations">7. Known Limitations</a></p>
+    <p><a href="#living-docs">3. Living SDLC Documentation Convention</a></p>
+    <p><a href="#copilot-assets">4. GitHub Copilot Assets Created</a></p>
+    <p><a href="#how-it-works">5. How Automated Documentation Sync Works</a></p>
+    <p><a href="#stories">6. Stories Delivered</a></p>
+    <p><a href="#testing">7. Test Evidence</a></p>
+    <p><a href="#limitations">8. Known Limitations</a></p>
   </div>
 </section>
 
@@ -177,8 +179,36 @@
   </table>
 </section>
 
+<section id="living-docs">
+  <h2>3. Living SDLC Documentation Convention</h2>
+  <p>
+    The four SDLC files started as a one-time artifact set for the docs-sync feature build. Through direct user
+    feedback the convention was corrected twice, and both corrections are now codified in
+    <code>.github/copilot-instructions.md</code> so the process holds for every future story automatically:
+  </p>
+  <div class="card">
+    <h3 style="margin-top:0">Correction 1 — from one-time snapshot to living documents</h3>
+    <p class="muted">
+      Initially, <code>requirements.md</code>/<code>architecture.md</code>/<code>design-review.md</code>/<code>impl-plan.md</code>
+      were treated as a closed record of the docs-sync build, so a later story (<code>PATCH /api/tasks/:id</code>)
+      didn't touch them. Corrected to: for <strong>every</strong> story, analyze all four and append a dated,
+      story-tagged section to whichever ones actually change — never rewriting prior history. The
+      <code>PATCH /api/tasks/:id</code> story was then retroactively documented this way.
+    </p>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Correction 2 — API scope broadened to API + UI</h3>
+    <p class="muted">
+      The corrected wording still said "living SDLC documents for the whole API". Corrected again to
+      "the whole application — backend/API <strong>and</strong> frontend/UI", with a matching pointer added
+      directly in <code>.github/instructions/frontend.instructions.md</code> so it's visible whenever a UI file
+      is being edited, not only inherited from the global instructions file.
+    </p>
+  </div>
+</section>
+
 <section id="copilot-assets">
-  <h2>3. GitHub Copilot Assets Created</h2>
+  <h2>4. GitHub Copilot Assets Created</h2>
   <p>Everything below lives under <code>.github/</code> and is picked up automatically by GitHub Copilot Chat/Agent Mode in this workspace.</p>
 
   <h3>Global instructions</h3>
@@ -240,7 +270,7 @@
 </section>
 
 <section id="how-it-works">
-  <h2>4. How Automated Documentation Sync Works</h2>
+  <h2>5. How Automated Documentation Sync Works</h2>
   <div class="flow">
     <span class="step">app.ts mounts</span><span class="arrow">→</span>
     <span class="step">routes/*.routes.ts</span><span class="arrow">→</span>
@@ -265,7 +295,7 @@
 </section>
 
 <section id="stories">
-  <h2>5. Stories Delivered</h2>
+  <h2>6. Stories Delivered</h2>
   <div class="grid-2">
     <div class="card">
       <h3 style="margin-top:0">PR #1 — Automated Documentation Sync</h3>
@@ -274,14 +304,14 @@
     </div>
     <div class="card">
       <h3 style="margin-top:0">PR #2 — PATCH /api/tasks/:id</h3>
-      <p class="muted">[EPMCDMETST-66640] Update an existing task's title, with validation — used as a live test of docs-sync against a real new story. Also fixed a docs-sync bug (missing implicit 200 responses) found during that test.</p>
+      <p class="muted">[EPMCDMETST-66640] Update an existing task's title, with validation — used as a live test of docs-sync against a real new story. Also fixed a docs-sync bug (missing implicit 200 responses) found during that test, and later gained the retroactive SDLC doc updates plus the two living-docs convention corrections described above.</p>
       <p><a href="https://github.com/cprash/tasklite-ai-sdlc-github-copilot/pull/2">View PR #2</a> · <span class="pill-warn">open</span></p>
     </div>
   </div>
 </section>
 
 <section id="testing">
-  <h2>6. Test Evidence</h2>
+  <h2>7. Test Evidence</h2>
   <pre><code>&gt; node --test "scripts/**/*.test.mjs"
 tests 14, pass 14, fail 0
 
@@ -306,7 +336,7 @@ docs-sync: no documentation changes detected.</code></pre>
 </section>
 
 <section id="limitations">
-  <h2>7. Known Limitations</h2>
+  <h2>8. Known Limitations</h2>
   <ul>
     <li>Trigger is manual only (<code>npm run docs:sync</code>) — CI enforcement of doc staleness was explicitly deferred.</li>
     <li>Parser is static-text based, tailored to this repo's current route/controller/validator shape (one route registration per statement, flat <code>z.object({...})</code> schemas).</li>
