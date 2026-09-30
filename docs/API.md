@@ -40,6 +40,24 @@ Create a task with a required title.
 
 ---
 
+## PATCH /api/tasks/:id
+
+Update a task's title.
+
+**Request Body**
+
+| Field | Type | Required | Constraints |
+|-------|------|----------|-------------|
+| `title` | string | yes | min length 1 |
+
+**Responses**
+
+- `200` — OK
+- `400` — title is required
+- `404` — Task not found
+
+---
+
 ## PATCH /api/tasks/:id/status
 
 Update a task's status to OPEN or COMPLETED.
@@ -52,6 +70,7 @@ Update a task's status to OPEN or COMPLETED.
 
 **Responses**
 
+- `200` — OK
 - `400` — status must be OPEN or COMPLETED
 - `404` — Task not found
 

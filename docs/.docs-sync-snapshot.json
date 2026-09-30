@@ -19,6 +19,14 @@
   },
   {
     "method": "PATCH",
+    "path": "/api/tasks/:id",
+    "description": "Update a task's title.",
+    "requestFields": [
+      "title:string:true"
+    ]
+  },
+  {
+    "method": "PATCH",
     "path": "/api/tasks/:id/status",
     "description": "Update a task's status to OPEN or COMPLETED.",
     "requestFields": [

@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import { Prisma } from "@prisma/client";
 import { prisma } from "../lib/prisma.js";
-import { createTaskSchema, updateTaskStatusSchema } from "../validators/task.validators.js";
+import { createTaskSchema, updateTaskStatusSchema, updateTaskTitleSchema } from "../validators/task.validators.js";
 import { HttpError } from "../utils/httpError.js";
 
 // List all tasks, newest first.
@@ -49,6 +49,33 @@ export async function updateTaskStatus(req: Request, res: Response, next: NextFu
     const task = await prisma.task.update({
       where: { id },
       data: { status: parsed.data.status },
+    });
+    res.json(task);
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") {
+      next(new HttpError(404, "Task not found"));
+      return;
+    }
+    next(error);
+  }
+}
+
+// Update a task's title.
+export async function updateTaskTitle(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) {
+      throw new HttpError(404, "Task not found");
+    }
+
+    const parsed = updateTaskTitleSchema.safeParse(req.body);
+    if (!parsed.success) {
+      throw new HttpError(400, "title is required");
+    }
+
+    const task = await prisma.task.update({
+      where: { id },
+      data: { title: parsed.data.title },
     });
     res.json(task);
   } catch (error) {

@@ -63,3 +63,26 @@ test("extractControllerInfo: returns null when the handler doesn't exist in the 
   const info = extractControllerInfo("export async function other() {}", "missingHandler", [], () => {});
   assert.equal(info, null);
 });
+
+test("extractControllerInfo: a bare res.json() alongside thrown HttpErrors still reports the implicit 200", () => {
+  const source = `
+// Update a task's title.
+export async function updateTaskTitle(req, res, next) {
+  try {
+    const parsed = updateTaskTitleSchema.safeParse(req.body);
+    if (!parsed.success) {
+      throw new HttpError(400, "title is required");
+    }
+    const task = await prisma.task.update({ where: { id: 1 }, data: { title: parsed.data.title } });
+    res.json(task);
+  } catch (error) {
+    next(error);
+  }
+}
+`;
+  const info = extractControllerInfo(source, "updateTaskTitle", ["updateTaskTitleSchema"], () => {});
+  assert.deepEqual(info.responses, [
+    { status: 200, meaning: "OK" },
+    { status: 400, meaning: "title is required" },
+  ]);
+});

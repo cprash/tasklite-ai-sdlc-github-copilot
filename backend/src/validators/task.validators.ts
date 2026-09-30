@@ -8,5 +8,10 @@ export const updateTaskStatusSchema = z.object({
   status: z.enum(["OPEN", "COMPLETED"]),
 });
 
+export const updateTaskTitleSchema = z.object({
+  title: z.string().trim().min(1, "title is required"),
+});
+
 export type CreateTaskInput = z.infer<typeof createTaskSchema>;
 export type UpdateTaskStatusInput = z.infer<typeof updateTaskStatusSchema>;
+export type UpdateTaskTitleInput = z.infer<typeof updateTaskTitleSchema>;

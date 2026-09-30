@@ -83,7 +83,8 @@ export function extractResponses(bodyText) {
     responses.set(status, m[2].slice(1, -1));
   }
 
-  if (responses.size === 0 && /res\.json\(/.test(bodyText)) {
+  // A bare `res.json(...)` (no preceding `.status(n)` in the same chain) implies a 200 response.
+  if (/res\.json\(/.test(bodyText) && !responses.has(200)) {
     responses.set(200, REASON_PHRASES[200]);
   }
 

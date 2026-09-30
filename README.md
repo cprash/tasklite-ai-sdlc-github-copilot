@@ -119,6 +119,7 @@ npx prisma migrate dev
 | GET | `/api/health` | Health check, returns the service status. |
 | GET | `/api/tasks` | List all tasks, newest first. |
 | POST | `/api/tasks` | Create a task with a required title. |
+| PATCH | `/api/tasks/:id` | Update a task's title. |
 | PATCH | `/api/tasks/:id/status` | Update a task's status to OPEN or COMPLETED. |
 | DELETE | `/api/tasks/:id` | Delete a task permanently. |
 <!-- docs-sync:api-table:end -->
