@@ -4,6 +4,7 @@ import { prisma } from "../lib/prisma.js";
 import { createTaskSchema, updateTaskStatusSchema } from "../validators/task.validators.js";
 import { HttpError } from "../utils/httpError.js";
 
+// List all tasks, newest first.
 export async function listTasks(_req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const tasks = await prisma.task.findMany({
@@ -15,6 +16,7 @@ export async function listTasks(_req: Request, res: Response, next: NextFunction
   }
 }
 
+// Create a task with a required title.
 export async function createTask(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const parsed = createTaskSchema.safeParse(req.body);
@@ -31,6 +33,7 @@ export async function createTask(req: Request, res: Response, next: NextFunction
   }
 }
 
+// Update a task's status to OPEN or COMPLETED.
 export async function updateTaskStatus(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const id = Number(req.params.id);
@@ -57,6 +60,7 @@ export async function updateTaskStatus(req: Request, res: Response, next: NextFu
   }
 }
 
+// Delete a task permanently.
 export async function deleteTask(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const id = Number(req.params.id);
