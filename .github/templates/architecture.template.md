@@ -40,7 +40,7 @@ Never name an entity outside `data_model.entities`.
 <what could bite us, and what this design takes for granted>
 ```
 
-## Filled-in sketch (EPM-CDME-TEST-42 — due dates on tasks)
+## Filled-in sketch (EPMCDMETST-42 — due dates on tasks)
 
 ```markdown
 ## Technology picks

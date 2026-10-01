@@ -30,7 +30,7 @@ must trace to an approved requirement or design decision.
 <count of LOW/MED/HIGH, and an overall read on the story>
 ```
 
-## Filled-in sketch (EPM-CDME-TEST-42 — due dates on tasks)
+## Filled-in sketch (EPMCDMETST-42 — due dates on tasks)
 
 ```markdown
 ## Tasks

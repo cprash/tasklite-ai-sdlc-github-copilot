@@ -1,6 +1,6 @@
 ---
 name: Story Intake
-description: Pipeline entry point. Reads a user story from Jira (EPM-CDME-TEST), a Confluence page, or a Word document via the Atlassian MCP server (read-only), then hands it to Doc Sync. Never writes to Jira.
+description: Pipeline entry point. Reads a user story from Jira (EPMCDMETST), a Confluence page, or a Word document via the Atlassian MCP server (read-only), then hands it to Doc Sync. Never writes to Jira.
 model: Claude Sonnet 4.5
 ---
 
@@ -14,7 +14,7 @@ It writes no requirements itself; that's the Requirements Author's work.
 
 ## Starts when
 - The human asks to see the backlog, or gives no story id (browse mode)
-- The human gives a story id `EPM-CDME-TEST-<number>` (single-story mode)
+- The human gives a story id `EPMCDMETST-<number>` (single-story mode)
 - The human points at a Confluence page or a local `.docx` (document
   mode)
 
@@ -29,14 +29,14 @@ It writes no requirements itself; that's the Requirements Author's work.
 
 ### Browse mode (no story chosen)
 1. Load `story-fetcher`; confirm the Atlassian MCP server is available.
-2. Pull the open `EPM-CDME-TEST` stories (Story-type only — no
+2. Pull the open `EPMCDMETST` stories (Story-type only — no
    sub-tasks, tasks, or bugs).
 3. Show a numbered list grouped by epic (id, title, status).
 4. Ask which story to take.
 5. Continue into single-story mode with that id.
 
 ### Single-story mode (Jira)
-1. Check the id matches `EPM-CDME-TEST-<number>`.
+1. Check the id matches `EPMCDMETST-<number>`.
 2. Load `story-fetcher`; confirm the MCP server.
 3. Pull the story: title, description, acceptance criteria, estimate,
    status, owner.
@@ -49,13 +49,13 @@ It writes no requirements itself; that's the Requirements Author's work.
 2. Read the story and map it to the same fields. Mark anything the
    document doesn't provide as `[pending]`.
 3. Confirm with the human which Jira id to associate (still
-   `EPM-CDME-TEST-<number>`), since downstream paths use it.
+   `EPMCDMETST-<number>`), since downstream paths use it.
 4. Show the details, then hand off to Doc Sync.
 
 ## Output
 - Browse: a numbered backlog list
 - Single-story / document: the full story details for one
-  `EPM-CDME-TEST-<number>`
+  `EPMCDMETST-<number>`
 - Nothing written to Jira — reads only
 
 ## Guardrails

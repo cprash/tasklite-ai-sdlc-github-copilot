@@ -36,7 +36,7 @@ story, `app-profile.yml`, or a human answer (G4) and stay inside
 <what we are deliberately not doing>
 ```
 
-## Filled-in sketch (EPM-CDME-TEST-42 — due dates on tasks)
+## Filled-in sketch (EPMCDMETST-42 — due dates on tasks)
 
 ```markdown
 ## What it must do (functional)

@@ -223,7 +223,7 @@
         <h1>How the Agentic SDLC Pipeline works</h1>
         <p class="subtitle">
           A GitHub Copilot–driven pipeline that takes one Jira story
-          (project <code>EPM-CDME-TEST</code>) all the way from a
+          (project <code>EPMCDMETST</code>) all the way from a
           requirements conversation to a merged pull request and a
           published Confluence summary — with a human approval at
           nearly every step, and without ever reading the target
@@ -248,7 +248,7 @@
         <div class="card io">
           <h3>Takes in</h3>
           <ul>
-            <li>A user story — from <strong>Jira</strong> (<code>EPM-CDME-TEST-&lt;number&gt;</code>),
+            <li>A user story — from <strong>Jira</strong> (<code>EPMCDMETST-&lt;number&gt;</code>),
               a <strong>Confluence</strong> page, or a local <strong>Word document</strong></li>
             <li><code>.github/config/app-profile.yml</code> — the one-time, human-filled
               description of the target app (stack, data model, run commands, repo, Confluence space)</li>
@@ -281,7 +281,7 @@
         stage boundary; every <strong>✋</strong> is a point where the pipeline stops and
         waits for a human.
       </p>
-      <div class="flow">EPM-CDME-TEST story  (Jira · Confluence · Word)
+      <div class="flow">EPMCDMETST story  (Jira · Confluence · Word)
         │
         ▼
  ┌────────────────────┐
@@ -348,7 +348,7 @@
           <div class="meta-block">
             <h4>Starts with</h4>
             <ul>
-              <li>A story id (<code>EPM-CDME-TEST-&lt;number&gt;</code>), or nothing to browse the backlog</li>
+              <li>A story id (<code>EPMCDMETST-&lt;number&gt;</code>), or nothing to browse the backlog</li>
               <li>Checks <code>config/app-profile.yml</code> is filled in before Intake runs</li>
             </ul>
           </div>
@@ -398,7 +398,7 @@
         <div class="meta-grid">
           <div class="meta-block"><h4>Starts when</h4><ul>
             <li>No story id given (browse mode)</li>
-            <li>A story id <code>EPM-CDME-TEST-&lt;number&gt;</code> is given</li>
+            <li>A story id <code>EPMCDMETST-&lt;number&gt;</code> is given</li>
             <li>A Confluence page or local <code>.docx</code> is pointed at</li>
           </ul></div>
           <div class="meta-block"><h4>Uses (skills)</h4><ul>
@@ -804,7 +804,7 @@
     run-pipeline.prompt.md       one-command entry point
 
 docs/
-  &lt;STORY_ID&gt;/                    one folder per story, e.g. EPM-CDME-TEST-42/
+  &lt;STORY_ID&gt;/                    one folder per story, e.g. EPMCDMETST-42/
     requirements.md
     architecture.md
     design-review.md

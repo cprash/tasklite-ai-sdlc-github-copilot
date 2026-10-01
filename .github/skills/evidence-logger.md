@@ -11,12 +11,12 @@ Local filesystem only, through `workspace-writer`. No network, no
 credentials.
 
 ## Inputs
-- `story_id` — `EPM-CDME-TEST-<number>`
+- `story_id` — `EPMCDMETST-<number>`
 - `passed`, `failed`, `skipped` — counts, as reported by the human
 - `note` — optional free text (e.g. which tests failed and why)
 
 ## Before it runs
-- `story_id` must match `EPM-CDME-TEST-<number>`.
+- `story_id` must match `EPMCDMETST-<number>`.
 - `passed`, `failed`, `skipped` must all be numbers.
 - Never invent results — if the human hasn't reported yet, wait (G4).
 

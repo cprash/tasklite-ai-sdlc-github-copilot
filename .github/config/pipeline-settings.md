@@ -11,8 +11,8 @@ Atlassian / GitHub MCP servers.
 - The pipeline never reads provider tokens directly.
 
 ## Story identity
-- Jira project: `EPM-CDME-TEST` (confirm against `jira.project_key`)
-- Story pattern: `EPM-CDME-TEST-<number>` — written as `{{STORY_ID}}`
+- Jira project: `EPMCDMETST` (confirm against `jira.project_key`)
+- Story pattern: `EPMCDMETST-<number>` — written as `{{STORY_ID}}`
 - A story can be sourced from Jira, a Confluence page, or a Word
   document (capstone Step 1). Whichever the source, the same fields are
   captured: title, description, acceptance criteria, estimate, status,
@@ -21,7 +21,7 @@ Atlassian / GitHub MCP servers.
 
 ## One folder per story
 Every story gets its **own** folder, named exactly after its story id:
-`docs/{{STORY_ID}}/` — for example `docs/EPM-CDME-TEST-42/`. Artifacts
+`docs/{{STORY_ID}}/` — for example `docs/EPMCDMETST-42/`. Artifacts
 are never written loose in `docs/`; they always live inside that story's
 folder, so two stories in flight never collide. The folder is created
 the first time the story needs it (by the requirements-author) and never
@@ -43,7 +43,7 @@ alongside the auto-kept `trace-log.md` and `handoff.md`. A finished
 story folder therefore looks like:
 
 ```
-docs/EPM-CDME-TEST-42/
+docs/EPMCDMETST-42/
 ├── requirements.md
 ├── architecture.md
 ├── design-review.md
@@ -57,9 +57,9 @@ docs/EPM-CDME-TEST-42/
 ## Branch + commit style
 - Branch: `feature/{{STORY_ID}}-<slug>` (slug ≤ 5 lowercase, hyphenated
   words), always cut from `github.base_branch`.
-  e.g. `feature/EPM-CDME-TEST-42-due-dates`
+  e.g. `feature/EPMCDMETST-42-due-dates`
 - Commit subject: `{{STORY_ID}}: <imperative summary>` (≤ 72 chars).
-  e.g. `EPM-CDME-TEST-42: add due date to task model`
+  e.g. `EPMCDMETST-42: add due date to task model`
 
 ## When things get committed
 The documentation authors leave their files uncommitted. The Build

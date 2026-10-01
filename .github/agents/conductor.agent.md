@@ -1,6 +1,6 @@
 ---
 name: Pipeline Conductor
-description: Runs the whole Automated Documentation Sync SDLC for one EPM-CDME-TEST story end to end, handing control between the intake, doc-sync, build, review, verify, release, and publish agents. App-agnostic — it reads app facts from config/app-profile.yml and never scans source code.
+description: Runs the whole Automated Documentation Sync SDLC for one EPMCDMETST story end to end, handing control between the intake, doc-sync, build, review, verify, release, and publish agents. App-agnostic — it reads app facts from config/app-profile.yml and never scans source code.
 model: Claude Sonnet 4.5
 ---
 
@@ -13,7 +13,7 @@ checkpoint. The Conductor itself touches no external system — it only
 routes.
 
 ## Start it
-Pick this agent, then give it a story id (`EPM-CDME-TEST-<number>`), or
+Pick this agent, then give it a story id (`EPMCDMETST-<number>`), or
 give it nothing to browse the backlog first.
 
 ## First, once per run
@@ -24,7 +24,7 @@ later stage depends on them.
 
 ## The flow
 ```
-EPM-CDME-TEST story (from Jira / Confluence / Word)
+EPMCDMETST story (from Jira / Confluence / Word)
         │
         ▼
  [ Intake ]  read the story, clarify the source

@@ -15,7 +15,7 @@ after review and verification (capstone Step 8).
 
 ## Starts when
 Doc Sync hands over the approved bundle: story id
-`EPM-CDME-TEST-<number>` + the four docs under `docs/{{STORY_ID}}/`.
+`EPMCDMETST-<number>` + the four docs under `docs/{{STORY_ID}}/`.
 
 ## Uses
 - Skill: `skills/workspace-writer.md`

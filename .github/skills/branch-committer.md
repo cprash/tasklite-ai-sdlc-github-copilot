@@ -22,7 +22,7 @@ From `app-profile.yml` and `pipeline-settings.md`:
 - `files` — an explicit list of paths to stage (never "everything")
 - `subject` — the commit subject in the configured shape
 - `branch` — optional; derived from the story id if omitted
-- `story_id` — `EPM-CDME-TEST-<number>`
+- `story_id` — `EPMCDMETST-<number>`
 
 ## Before it runs
 - Confirm the GitHub MCP server is available.

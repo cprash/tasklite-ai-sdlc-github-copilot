@@ -41,7 +41,7 @@ needs a severity and a concrete fix.
 - **Scope** — stays within the story and `data_model.entities`?
 - **Error Handling** — failure paths designed, not just the happy path?
 
-## Filled-in sketch (EPM-CDME-TEST-42 — due dates on tasks)
+## Filled-in sketch (EPMCDMETST-42 — due dates on tasks)
 
 ```markdown
 ## Findings

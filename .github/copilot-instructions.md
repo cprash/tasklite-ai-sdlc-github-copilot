@@ -46,14 +46,14 @@ coordinated by `agents/conductor.agent.md`.
 - `config/` — the per-repo app descriptor and the pipeline settings
 - `prompts/` — one-command entry points
 - `docs/<STORY_ID>/` — a dedicated folder per story, named after its
-  story id (e.g. `docs/EPM-CDME-TEST-42/`), holding every generated
+  story id (e.g. `docs/EPMCDMETST-42/`), holding every generated
   artifact for that story: `requirements.md`, `architecture.md`,
   `design-review.md`, `impl-plan.md`, then `code-review.md`,
   `verification.md`, `trace-log.md`, and `handoff.md`. Nothing is ever
   written loose in `docs/` — always inside the story's own folder.
 
 ## External systems
-- **Jira** (project `EPM-CDME-TEST`) and **Confluence** are reached only
+- **Jira** (project `EPMCDMETST`) and **Confluence** are reached only
   through the **Atlassian MCP server**.
 - **GitHub** (branches, commits, pull requests, comments) is reached only
   through the **GitHub MCP server**.

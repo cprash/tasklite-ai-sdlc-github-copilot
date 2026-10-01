@@ -32,7 +32,7 @@ several internal steps (Doc Sync's four authors, Review's two passes)
 collects one log line per step **in memory**, then writes them **in a
 single `workspace-writer` call** just before handing control back.
 
-1. Work out the story id (`EPM-CDME-TEST-<number>`).
+1. Work out the story id (`EPMCDMETST-<number>`).
 2. If `docs/{{STORY_ID}}/trace-log.md` does not exist, start it with:
    ```markdown
    # Trace Log — {{STORY_ID}}

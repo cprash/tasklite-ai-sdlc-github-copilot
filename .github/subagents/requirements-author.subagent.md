@@ -16,7 +16,7 @@ else.
 `agents/doc-sync-agent.agent.md`
 
 ## Starts when
-Doc Sync passes over a confirmed story id `EPM-CDME-TEST-<number>` plus
+Doc Sync passes over a confirmed story id `EPMCDMETST-<number>` plus
 the fetched details (title, description, acceptance criteria, estimate,
 status, owner, source).
 
@@ -29,9 +29,9 @@ status, owner, source).
 - `config/app-profile.yml` (tech stack + `data_model` scope)
 
 ## Steps
-1. Check the id matches `EPM-CDME-TEST-<number>`.
+1. Check the id matches `EPMCDMETST-<number>`.
 2. Create this story's own folder, `docs/{{STORY_ID}}/` (e.g.
-   `docs/EPM-CDME-TEST-42/`), if it doesn't already exist — this is the
+   `docs/EPMCDMETST-42/`), if it doesn't already exist — this is the
    folder that will hold all of the story's artifacts. Write this and
    every later doc inside it, never loose in `docs/`.
 3. Read the story details and the relevant `app-profile.yml` fields.

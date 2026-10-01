@@ -13,7 +13,7 @@ order, holding a chat checkpoint after each. All four files stay local;
 the whole bundle moves to Build together once approved.
 
 ## Starts when
-Intake hands over a confirmed story id `EPM-CDME-TEST-<number>` plus the
+Intake hands over a confirmed story id `EPMCDMETST-<number>` plus the
 fetched details.
 
 ## The four authors, in order
@@ -28,9 +28,9 @@ fetched details.
 - The story id + details from Intake
 
 ## Steps
-1. Check the id matches `EPM-CDME-TEST-<number>`.
+1. Check the id matches `EPMCDMETST-<number>`.
 2. Ensure this story's **own folder** exists: `docs/{{STORY_ID}}/`
-   (e.g. `docs/EPM-CDME-TEST-42/`). Create it if it isn't there. Every
+   (e.g. `docs/EPMCDMETST-42/`). Create it if it isn't there. Every
    artifact for this story goes inside it — never loose in `docs/`, and
    never mixed with another story's folder.
 3. Run the **Requirements Author**; wait for its chat approve/reject.

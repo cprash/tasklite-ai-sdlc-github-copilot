@@ -1,6 +1,6 @@
 ---
 mode: agent
-description: One-command start for the Automated Documentation Sync SDLC on an EPM-CDME-TEST story. Hands control to the Pipeline Conductor.
+description: One-command start for the Automated Documentation Sync SDLC on an EPMCDMETST story. Hands control to the Pipeline Conductor.
 ---
 
 # Run the Pipeline
@@ -15,7 +15,7 @@ data model, run commands, GitHub repo, Confluence space). The pipeline
 reads every app fact from there and never scans your source.
 
 ## How to use
-- Pass a story id like `EPM-CDME-TEST-42`, **or** leave it blank to
+- Pass a story id like `EPMCDMETST-42`, **or** leave it blank to
   browse the backlog first.
 - The story can also live in a Confluence page or a Word doc — point
   Intake at it.
@@ -33,4 +33,4 @@ reads every app fact from there and never scans your source.
 
 Nothing is committed, posted, or published without your explicit okay.
 
-Story: ${input:storyId:EPM-CDME-TEST-}
+Story: ${input:storyId:EPMCDMETST-}

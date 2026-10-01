@@ -39,8 +39,8 @@ github:
   base_branch: "main"
 
 jira:
-  project_key: "EPM-CDME-TEST"
-  story_pattern: "EPM-CDME-TEST-<number>"
+  project_key: "EPMCDMETST"
+  story_pattern: "EPMCDMETST-<number>"
 
 confluence:
   space_key: ""            # where the batch summary lands. If you want a
