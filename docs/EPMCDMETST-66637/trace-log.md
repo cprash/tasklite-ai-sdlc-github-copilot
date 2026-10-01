@@ -10,3 +10,6 @@
 | 2026-10-01T00:40:00Z | Review Agent | docs/EPMCDMETST-66637/code-review.md | APPROVED |
 | 2026-10-01T00:50:00Z | Verify Agent | automated test generation skipped (human consent; no frontend test harness) | N/A |
 | 2026-10-01T01:00:00Z | Verify Agent | docs/EPMCDMETST-66637/verification.md + tests/evidence/run-EPMCDMETST-66637-20261001T010000Z.log | APPROVED |
+| 2026-10-01T01:15:00Z | Release Agent | PR #3 opened (gh CLI, manual creation due to EMU GraphQL restriction) + CHANGELOG.md entry | APPROVED |
+| 2026-10-01T01:30:00Z | Release Agent | PR #3 merged into main (commit 5d64559) by human | N/A |
+| 2026-10-01T01:45:00Z | Publish Agent | Confluence page EPMCDMETST-66637 — Enter edit mode for a task to change its title — Summary (id 43810817, space TaskLite) | APPROVED |

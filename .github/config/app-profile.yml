@@ -43,7 +43,7 @@ jira:
   story_pattern: "EPMCDMETST-<number>"
 
 confluence:
-  space_key: ""            # where the batch summary lands. If you want a
+  space_key: "TaskLite"     # where the batch summary lands. If you want a
                            # default tied to the Jira project, use "EPMCDME".
                            # Blank => the publish agent asks before posting.
   parent_page_id: ""       # optional: nest the summary under this page
