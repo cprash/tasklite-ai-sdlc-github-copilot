@@ -14,7 +14,16 @@ export function TaskItem({ task, onToggleStatus, onDelete, disabled, isEditing, 
 
   return (
     <li className={`task-item${isCompleted ? " task-item--completed" : ""}${isEditing ? " task-item--editing" : ""}`}>
-      <span className="task-item__title">{task.title}</span>
+      {isEditing ? (
+        <input
+          type="text"
+          className="task-item__edit-input"
+          defaultValue={task.title}
+          aria-label="Task title"
+        />
+      ) : (
+        <span className="task-item__title">{task.title}</span>
+      )}
       {isCompleted && <span className="task-item__badge">Completed</span>}
       <div className="task-item__actions">
         <button type="button" onClick={() => onStartEdit(task.id)} disabled={disabled}>
