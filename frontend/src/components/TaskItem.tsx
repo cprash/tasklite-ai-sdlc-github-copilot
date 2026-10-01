@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import type { Task } from "../types/task";
 
 interface TaskItemProps {
@@ -11,11 +12,23 @@ interface TaskItemProps {
 
 export function TaskItem({ task, onToggleStatus, onDelete, disabled, isEditing, onStartEdit }: TaskItemProps) {
   const isCompleted = task.status === "COMPLETED";
+  const editInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isEditing) {
+      const input = editInputRef.current;
+      if (input) {
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+      }
+    }
+  }, [isEditing]);
 
   return (
     <li className={`task-item${isCompleted ? " task-item--completed" : ""}${isEditing ? " task-item--editing" : ""}`}>
       {isEditing ? (
         <input
+          ref={editInputRef}
           type="text"
           className="task-item__edit-input"
           defaultValue={task.title}
