@@ -10,32 +10,32 @@
 # ===========================================================================
 
 app:
-  name: ""                 # what the application is called
-  summary: ""              # one sentence on what it does
+  name: "TaskLite"
+  summary: "A lightweight task management app"
 
 tech:
-  languages: []            # e.g. [TypeScript, Node.js]
-  frameworks: []           # e.g. [Express, React, Prisma, Zod]
-  package_manager: ""      # e.g. npm | pnpm | yarn | pip | maven
-  datastore: ""            # e.g. SQLite | PostgreSQL | none
+  languages: [TypeScript]
+  frameworks: [Express, React, Prisma]
+  package_manager: "npm"
+  datastore: "PostgreSQL"
 
 data_model:
   # The complete set of entities/tables/collections the agents may mention.
   # Nothing outside this list may appear in requirements, design, or code.
-  entities: []             # e.g. [tasks]
+  entities: [tasks]
   notes: ""                # key fields, relationships, constraints
 
 local_run:
-  install: ""              # e.g. npm install
-  build: ""                # e.g. npm run build   (blank if none)
-  start: ""                # e.g. npm run dev
-  url: ""                  # e.g. http://localhost:5173
+  install: "npm install"
+  build: "npm run build"
+  start: "npm run dev"
+  url: "http://localhost:5173"
   health_check: ""         # optional URL/command proving the app is up
 
-code_locations: []         # where source lives, e.g. [backend/src, frontend/src]
+code_locations: [backend/src, frontend/src]
 
 github:
-  repo: ""                 # owner/repo  (single repo: app + tests + docs)
+  repo: "cprash/tasklite-ai-sdlc-github-copilot"
   base_branch: "main"
 
 jira:
