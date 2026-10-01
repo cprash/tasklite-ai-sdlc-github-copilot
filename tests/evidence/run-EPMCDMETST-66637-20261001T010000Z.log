@@ -1,0 +1,15 @@
+STORY: EPMCDMETST-66637
+TIMESTAMP: 2026-10-01T01:00:00Z
+REPORTED BY: human (manual verification; automated test generation was skipped for this story, per human consent)
+
+COUNTS:
+  passed:  5
+  failed:  0
+  skipped: 0
+
+NOTE: All 5 manual checks passed — AC1 (prefilled input on Edit), AC2
+(focus + cursor placement), AC3 (exclusivity across multiple tasks),
+DoD no-API-call (confirmed via Network tab), DoD keyboard-accessible
+entry.
+
+OUTCOME: PASS
