@@ -7,7 +7,7 @@
 EPMCDMETST-66637: As a user, I want to enter edit mode for a task, so that I can change its title.
 
 ## Last finished
-Release Agent — 2026-10-01T01:30:00Z — Checkpoint: N/A (merge confirmed by human)
+Publish Agent — 2026-10-01T01:45:00Z — Checkpoint: APPROVED
 
 ## Produced so far
 - docs/EPMCDMETST-66637/requirements.md
@@ -21,7 +21,9 @@ Release Agent — 2026-10-01T01:30:00Z — Checkpoint: N/A (merge confirmed by h
 - tests/evidence/run-EPMCDMETST-66637-20261001T010000Z.log
 - CHANGELOG.md entry (2026-10-01 — EPMCDMETST-66637)
 - PR: https://github.com/cprash/tasklite-ai-sdlc-github-copilot/pull/3 (merged)
+- Confluence summary: https://epamrahulsharma7.atlassian.net/wiki/spaces/TaskLite/pages/43810817/EPMCDMETST-66637+-+Enter+edit+mode+for+a+task+to+change+its+title+-+Summary
 
 ## Do next
-Pick: agents/publish-agent.agent.md
-Give it: the story id EPMCDMETST-66637, the merged PR link, and the full docs/EPMCDMETST-66637/ bundle to summarize on Confluence.
+Pipeline complete for EPMCDMETST-66637. Only remaining housekeeping: merge
+the small `feature/EPMCDMETST-66637-wrapup` branch (final trace-log/handoff
+rows + confluence.space_key) into main.
