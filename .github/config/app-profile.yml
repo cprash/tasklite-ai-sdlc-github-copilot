@@ -1,0 +1,54 @@
+# ===========================================================================
+# app-profile.yml  —  the one place this pipeline learns about your app
+# ===========================================================================
+# Fill this in once, per repository, and keep it current. Every agent and
+# sub-agent reads these values instead of inspecting your source code, which
+# is what lets the same pipeline run against any application.
+#
+# Golden rule: if an agent needs a fact that is not written here and not in
+# the Jira/Confluence/Word story, it must ASK you — never invent it.
+# ===========================================================================
+
+app:
+  name: ""                 # what the application is called
+  summary: ""              # one sentence on what it does
+
+tech:
+  languages: []            # e.g. [TypeScript, Node.js]
+  frameworks: []           # e.g. [Express, React, Prisma, Zod]
+  package_manager: ""      # e.g. npm | pnpm | yarn | pip | maven
+  datastore: ""            # e.g. SQLite | PostgreSQL | none
+
+data_model:
+  # The complete set of entities/tables/collections the agents may mention.
+  # Nothing outside this list may appear in requirements, design, or code.
+  entities: []             # e.g. [tasks]
+  notes: ""                # key fields, relationships, constraints
+
+local_run:
+  install: ""              # e.g. npm install
+  build: ""                # e.g. npm run build   (blank if none)
+  start: ""                # e.g. npm run dev
+  url: ""                  # e.g. http://localhost:5173
+  health_check: ""         # optional URL/command proving the app is up
+
+code_locations: []         # where source lives, e.g. [backend/src, frontend/src]
+
+github:
+  repo: ""                 # owner/repo  (single repo: app + tests + docs)
+  base_branch: "main"
+
+jira:
+  project_key: "EPM-CDME-TEST"
+  story_pattern: "EPM-CDME-TEST-<number>"
+
+confluence:
+  space_key: ""            # where the batch summary lands. If you want a
+                           # default tied to the Jira project, use "EPMCDME".
+                           # Blank => the publish agent asks before posting.
+  parent_page_id: ""       # optional: nest the summary under this page
+
+quality:
+  test_tool: ""            # e.g. Playwright | Jest | Vitest | pytest
+  tests_path: "tests/"     # where automated tests live
+  evidence_path: "tests/evidence/"  # where run logs are stored

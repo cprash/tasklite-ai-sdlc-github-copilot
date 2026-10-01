@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic SDLC Pipeline — Overview</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --panel: #161925;
+    --panel-2: #1c2030;
+    --border: #2a2f42;
+    --text: #e6e8f0;
+    --muted: #9aa0b4;
+    --accent: #7c9cff;
+    --accent-2: #5ad1a6;
+    --warn: #f0b429;
+    --danger: #ff6b6b;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code, pre {
+    font-family: var(--mono);
+    background: #10131c;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  code { padding: 1px 6px; font-size: 0.88em; color: var(--accent-2); }
+  pre { padding: 14px 16px; overflow-x: auto; font-size: 0.86em; color: #cfe3ff; }
+  pre code { border: none; padding: 0; background: none; color: inherit; }
+
+  .layout { display: grid; grid-template-columns: 270px 1fr; min-height: 100vh; }
+  nav.sidebar {
+    position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto;
+    background: #0b0d13; border-right: 1px solid var(--border); padding: 24px 18px;
+  }
+  nav.sidebar h1 { font-size: 1.05rem; margin: 0 0 4px; color: var(--text); }
+  nav.sidebar .tag { font-size: 0.75rem; color: var(--muted); margin-bottom: 22px; display:block; }
+  nav.sidebar .group { margin-bottom: 18px; }
+  nav.sidebar .group h2 {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--muted); margin: 0 0 8px;
+  }
+  nav.sidebar ul { list-style: none; margin: 0; padding: 0; }
+  nav.sidebar li { margin-bottom: 2px; }
+  nav.sidebar a {
+    display: block; padding: 5px 8px; border-radius: 6px; color: #c6cbe0; font-size: 0.86rem;
+  }
+  nav.sidebar a:hover { background: var(--panel-2); text-decoration: none; }
+
+  main { padding: 40px 56px 100px; max-width: 1100px; }
+  section { margin-bottom: 56px; scroll-margin-top: 20px; }
+  h2.section-title {
+    font-size: 1.5rem; margin: 0 0 6px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border); color: #fff;
+  }
+  .lede { color: var(--muted); margin-top: 0; margin-bottom: 24px; max-width: 760px; }
+
+  .hero {
+    background: linear-gradient(135deg, #1a2036 0%, #141726 100%);
+    border: 1px solid var(--border); border-radius: 14px; padding: 36px 40px; margin-bottom: 10px;
+  }
+  .hero h1 { margin: 0 0 10px; font-size: 1.9rem; color: #fff; }
+  .hero p.subtitle { color: var(--muted); margin: 0 0 18px; font-size: 1.02rem; }
+  .pill-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill {
+    font-size: 0.78rem; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--panel-2); color: var(--accent-2);
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 1.05rem; color: #fff; }
+  .card.io h3 { color: var(--accent); }
+
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.92rem; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; }
+  tr:last-child td { border-bottom: none; }
+
+  .flow {
+    background: #0b0d13; border: 1px solid var(--border); border-radius: 12px;
+    padding: 22px; font-family: var(--mono); font-size: 0.86rem; overflow-x: auto; color: #c7d0f0;
+    white-space: pre;
+  }
+
+  .agent-card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+    padding: 24px 26px; margin-bottom: 20px;
+  }
+  .agent-card .kicker {
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-2);
+    margin-bottom: 6px; display:flex; gap:8px; align-items:center;
+  }
+  .agent-card h3 { margin: 0 0 10px; font-size: 1.25rem; color: #fff; }
+  .agent-card .file { font-size: 0.8rem; color: var(--muted); margin-bottom: 14px; }
+  .agent-card .desc { color: #c6cbe0; margin-bottom: 16px; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  @media (max-width: 760px) { .meta-grid { grid-template-columns: 1fr; } }
+  .meta-block h4 {
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+    margin: 0 0 6px;
+  }
+  .meta-block ul { margin: 0; padding-left: 18px; font-size: 0.9rem; }
+  .meta-block ul li { margin-bottom: 3px; }
+  .badge {
+    display: inline-block; font-size: 0.72rem; padding: 2px 8px; border-radius: 6px;
+    background: rgba(124,156,255,0.15); color: var(--accent); border: 1px solid rgba(124,156,255,0.35);
+  }
+  .badge.skip { background: rgba(240,180,41,0.15); color: var(--warn); border-color: rgba(240,180,41,0.35); }
+  .badge.checkpoint { background: rgba(90,209,166,0.15); color: var(--accent-2); border-color: rgba(90,209,166,0.35); }
+  .badge.none { background: rgba(154,160,180,0.15); color: var(--muted); border-color: rgba(154,160,180,0.35); }
+
+  .subagent-card {
+    background: var(--panel-2); border: 1px dashed var(--border); border-radius: 12px;
+    padding: 18px 20px; margin-bottom: 14px;
+  }
+  .subagent-card h4 { margin: 0 0 6px; color: #fff; font-size: 1.02rem; }
+  .subagent-card .arrow { color: var(--accent-2); font-family: var(--mono); font-size: 0.85rem; }
+
+  .skill-card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .skill-card h4 { margin: 0 0 6px; font-size: 1rem; color: var(--accent); font-family: var(--mono); }
+  .skill-card p { margin: 4px 0; font-size: 0.88rem; color: #c6cbe0; }
+  .skill-card .label { color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  .guardrail {
+    display: grid; grid-template-columns: 50px 1fr; gap: 14px; padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .guardrail:last-child { border-bottom: none; }
+  .guardrail .g-id {
+    font-family: var(--mono); font-weight: 700; color: var(--accent); font-size: 0.95rem;
+  }
+  .guardrail h4 { margin: 0 0 4px; font-size: 0.98rem; color: #fff; }
+  .guardrail p { margin: 0; font-size: 0.88rem; color: #c6cbe0; }
+
+  .hook-box { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; margin-bottom: 16px; }
+  .hook-box h4 { margin-top: 0; color: var(--accent-2); font-family: var(--mono); font-size: 1rem; }
+
+  footer { color: var(--muted); font-size: 0.82rem; padding: 30px 56px 50px; border-top: 1px solid var(--border); }
+
+  .toc-chip {
+    display:inline-block; font-size:0.72rem; padding:2px 8px; border-radius:6px; margin-left:6px;
+    background: rgba(124,156,255,0.12); color: var(--accent);
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <nav class="sidebar">
+    <h1>Agentic SDLC Pipeline</h1>
+    <span class="tag">Automated Documentation Sync · Capstone</span>
+
+    <div class="group">
+      <h2>Start here</h2>
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#io">Inputs &amp; Outputs</a></li>
+        <li><a href="#flow">End-to-end flow</a></li>
+        <li><a href="#conductor">The Conductor</a></li>
+      </ul>
+    </div>
+
+    <div class="group">
+      <h2>Stage agents</h2>
+      <ul>
+        <li><a href="#intake-agent">Story Intake</a></li>
+        <li><a href="#doc-sync-agent">Documentation Sync</a></li>
+        <li><a href="#build-agent">Build Agent</a></li>
+        <li><a href="#review-agent">Review Agent</a></li>
+        <li><a href="#verify-agent">Verify Agent</a></li>
+        <li><a href="#release-agent">Release Agent</a></li>
+        <li><a href="#publish-agent">Publish Agent</a></li>
+      </ul>
+    </div>
+
+    <div class="group">
+      <h2>Doc Sync authors</h2>
+      <ul>
+        <li><a href="#subagents">Requirements Author</a></li>
+        <li><a href="#subagents">Architecture Author</a></li>
+        <li><a href="#subagents">Design Critic</a></li>
+        <li><a href="#subagents">Work Planner</a></li>
+      </ul>
+    </div>
+
+    <div class="group">
+      <h2>Shared plumbing</h2>
+      <ul>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#guardrails">Guardrails</a></li>
+        <li><a href="#hooks">Lifecycle hooks</a></li>
+        <li><a href="#config">Configuration files</a></li>
+        <li><a href="#filemap">File map</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <section id="overview">
+      <div class="hero">
+        <h1>How the Agentic SDLC Pipeline works</h1>
+        <p class="subtitle">
+          A GitHub Copilot–driven pipeline that takes one Jira story
+          (project <code>EPM-CDME-TEST</code>) all the way from a
+          requirements conversation to a merged pull request and a
+          published Confluence summary — with a human approval at
+          nearly every step, and without ever reading the target
+          application's source code.
+        </p>
+        <div class="pill-row">
+          <span class="pill">1 Conductor</span>
+          <span class="pill">7 Stage Agents</span>
+          <span class="pill">4 Doc-Sync Sub-agents</span>
+          <span class="pill">7 Skills</span>
+          <span class="pill">7 Guardrails (G1–G7)</span>
+          <span class="pill">2 Lifecycle Hooks</span>
+          <span class="pill">App-agnostic via app-profile.yml</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="io">
+      <h2 class="section-title">Inputs &amp; Outputs, at a glance</h2>
+      <p class="lede">What the pipeline needs before it can start, and exactly what exists once it finishes.</p>
+      <div class="grid-2">
+        <div class="card io">
+          <h3>Takes in</h3>
+          <ul>
+            <li>A user story — from <strong>Jira</strong> (<code>EPM-CDME-TEST-&lt;number&gt;</code>),
+              a <strong>Confluence</strong> page, or a local <strong>Word document</strong></li>
+            <li><code>.github/config/app-profile.yml</code> — the one-time, human-filled
+              description of the target app (stack, data model, run commands, repo, Confluence space)</li>
+            <li>Human answers to clarifying questions at each documentation step</li>
+            <li>Human approvals at every checkpoint (chat approvals, PR review, merge, publish)</li>
+            <li>Human-reported test pass/fail counts (the pipeline never fabricates test results)</li>
+          </ul>
+        </div>
+        <div class="card io">
+          <h3>Produces</h3>
+          <ul>
+            <li><code>docs/&lt;STORY_ID&gt;/</code> — one folder per story holding
+              <code>requirements.md</code>, <code>architecture.md</code>, <code>design-review.md</code>,
+              <code>impl-plan.md</code>, <code>code-review.md</code>, <code>verification.md</code>,
+              <code>trace-log.md</code>, <code>handoff.md</code></li>
+            <li>A feature branch with the docs bundle, implementation code, and generated tests committed</li>
+            <li>An open pull request with five required sections, merged by the human</li>
+            <li>A <code>CHANGELOG.md</code> entry for the story</li>
+            <li>A single Confluence summary page for the story</li>
+            <li>A test evidence log under the app's configured evidence path</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="flow">
+      <h2 class="section-title">End-to-end flow</h2>
+      <p class="lede">
+        The Conductor hands control from one agent to the next. Every arrow down is a
+        stage boundary; every <strong>✋</strong> is a point where the pipeline stops and
+        waits for a human.
+      </p>
+      <div class="flow">EPM-CDME-TEST story  (Jira · Confluence · Word)
+        │
+        ▼
+ ┌────────────────────┐
+ │ Story Intake        │  reads the story, never writes Jira
+ └────────────────────┘
+        │  story id + details
+        ▼
+ ┌──────────────────────────────────────────────┐
+ │ Documentation Sync          (4 authors)        │
+ │   Requirements Author   → requirements.md   ✋  │
+ │   Architecture Author   → architecture.md   ✋  │
+ │   Design Critic         → design-review.md  ✋  │
+ │   Work Planner          → impl-plan.md      ✋  │
+ │   (all local / uncommitted)                    │
+ └──────────────────────────────────────────────┘
+        │  docs/&lt;STORY_ID&gt;/ bundle, all approved
+        ▼
+ ┌────────────────────┐
+ │ Build Agent          │  cuts branch, commits docs + code  (no PR)
+ └────────────────────┘
+        │
+        ▼
+ ┌────────────────────┐
+ │ Review Agent         │  7-area review → code-review.md     ✋
+ └────────────────────┘
+        │
+        ▼
+ ┌────────────────────┐
+ │ Verify Agent         │  run app, tests + doc QA            ✋
+ └────────────────────┘      → verification.md + evidence log
+        │
+        ▼
+ ┌────────────────────┐
+ │ Release Agent        │  opens the PR (5 sections)          ✋
+ └────────────────────┘      + CHANGELOG, posts review findings
+        │  human merges the PR                                ✋
+        ▼
+ ┌────────────────────┐
+ │ Publish Agent        │  one Confluence summary page        ✋
+ └────────────────────┘
+        │
+        ▼
+     pipeline complete 🎉</div>
+    </section>
+
+    <section id="conductor">
+      <h2 class="section-title">The Conductor</h2>
+      <p class="lede">
+        <code>agents/conductor.agent.md</code> — the single entry point you select from the
+        Copilot Chat agent picker to run the whole thing.
+      </p>
+      <div class="agent-card">
+        <div class="kicker">Master controller <span class="toc-chip">Claude Sonnet 4.5</span></div>
+        <h3>Pipeline Conductor</h3>
+        <div class="file">.github/agents/conductor.agent.md</div>
+        <p class="desc">
+          Drives the capstone's full lifecycle for one story, handing the baton to each
+          stage agent in turn and holding at every human checkpoint. It is deliberately
+          thin: <strong>it never talks to Jira, GitHub, or Confluence itself</strong> — it only
+          routes between the agents that do, so each integration stays owned by exactly
+          one agent.
+        </p>
+        <div class="meta-grid">
+          <div class="meta-block">
+            <h4>Starts with</h4>
+            <ul>
+              <li>A story id (<code>EPM-CDME-TEST-&lt;number&gt;</code>), or nothing to browse the backlog</li>
+              <li>Checks <code>config/app-profile.yml</code> is filled in before Intake runs</li>
+            </ul>
+          </div>
+          <div class="meta-block">
+            <h4>Delegates to, in order</h4>
+            <ul>
+              <li>Story Intake → Documentation Sync (4 sub-agents)</li>
+              <li>Build → Review → Verify → Release → Publish</li>
+            </ul>
+          </div>
+          <div class="meta-block">
+            <h4>On stage failure</h4>
+            <ul>
+              <li>Reports the stage and cause plainly</li>
+              <li>Offers retry, or skip (only Architecture, Design Review, Impl Planning are skippable)</li>
+              <li>Re-runs only the failed stage — never restarts the pipeline</li>
+            </ul>
+          </div>
+          <div class="meta-block">
+            <h4>If the chat session dies</h4>
+            <ul>
+              <li>Reads <code>docs/&lt;STORY_ID&gt;/handoff.md</code> in a fresh session</li>
+              <li>That file always names the next agent to pick and what to hand it</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stage-agents">
+      <h2 class="section-title">Stage agents</h2>
+      <p class="lede">
+        Seven picker-selectable agents, each owning exactly one part of the lifecycle.
+        Every card below lists what triggers it, the skills and sub-agents it relies on,
+        its checkpoint behaviour, and the guardrails/hooks it follows.
+      </p>
+
+      <div class="agent-card" id="intake-agent">
+        <div class="kicker">Entry point <span class="badge none">No checkpoint of its own</span></div>
+        <h3>Story Intake</h3>
+        <div class="file">.github/agents/intake-agent.agent.md</div>
+        <p class="desc">
+          Gets the pipeline a story to work on — from Jira, a Confluence page, or a
+          Word document — and normalises all three to the same fields
+          (title, description, acceptance criteria, estimate, status, owner).
+        </p>
+        <div class="meta-grid">
+          <div class="meta-block"><h4>Starts when</h4><ul>
+            <li>No story id given (browse mode)</li>
+            <li>A story id <code>EPM-CDME-TEST-&lt;number&gt;</code> is given</li>
+            <li>A Confluence page or local <code>.docx</code> is pointed at</li>
+          </ul></div>
+          <div class="meta-block"><h4>Uses (skills)</h4><ul>
+            <li><code>story-fetcher</code> — browse / fetch, via Atlassian MCP</li>
+            <li><code>workspace-writer</code> — trace-log entry only</li>
+          </ul></div>
+          <div class="meta-block"><h4>Guardrails</h4><ul>
+            <li><strong>G1</strong> — Jira is read-only; this is the <em>only</em> agent allowed to reach it, and it never creates/updates/transitions/deletes an issue</li>
+          </ul></div>
+          <div class="meta-block"><h4>Hooks</h4><ul>
+            <li>before-work: skipped — no file input (MCP / local doc)</li>
+            <li>after-work: logs once a story id is locked in, Checkpoint <code>N/A</code></li>
+          </ul></div>
+        </div>
+        <p style="margin-top:14px;"><strong>Hands off to</strong> → Documentation Sync</p>
+      </div>
+
+      <div class="agent-card" id="doc-sync-agent">
+        <div class="kicker">Capstone Steps 1–4 <span class="badge checkpoint">4 chat checkpoints</span></div>
+        <h3>Documentation Sync</h3>
+        <div class="file">.github/agents/doc-sync-agent.agent.md</div>
+        <p class="desc">
+          The heart of the "Automated Documentation Sync" use case. Runs four
+          document-authoring sub-agents in strict sequence, each gated by its own
+          chat approval, before anything is committed.
+        </p>
+        <div class="meta-grid">
+          <div class="meta-block"><h4>Starts when</h4><ul>
+            <li>Intake hands over a confirmed story id + fetched details</li>
+          </ul></div>
+          <div class="meta-block"><h4>Calls (sub-agents, in order)</h4><ul>
+            <li>Requirements Author → <code>requirements.md</code></li>
+            <li>Architecture Author → <code>architecture.md</code></li>
+            <li>Design Critic → <code>design-review.md</code></li>
+            <li>Work Planner → <code>impl-plan.md</code></li>
+          </ul></div>
+          <div class="meta-block"><h4>Guardrails</h4><ul>
+            <li><strong>G2</strong> — never commits or opens a PR; everything stays local until Build bundles it</li>
+          </ul></div>
+          <div class="meta-block"><h4>Hooks</h4><ul>
+            <li>before-work: ensures the story's own <code>docs/&lt;STORY_ID&gt;/</code> folder exists</li>
+            <li>after-work: collects all four sub-agents' rows and writes them to <code>trace-log.md</code> in <strong>one</strong> batched call</li>
+          </ul></div>
+        </div>
+        <p style="margin-top:14px;"><strong>Came from</strong> Story Intake · <strong>Hands off to</strong> → Build Agent</p>
+      </div>
+
+      <div class="agent-card" id="build-agent">
+        <div class="kicker">Capstone Step 5 — Implementation <span class="badge none">No checkpoint</span></div>
+        <h3>Build Agent</h3>
+        <div class="file">.github/agents/build-agent.agent.md</div>
+        <p class="desc">
+          The first agent that writes to git. Cuts the feature branch, makes the
+          first commit (the whole documentation bundle), then implements the
+          approved plan task by task. <strong>Deliberately does not open a PR</strong> —
+          that only happens later, at Release (capstone Step 8).
+        </p>
+        <div class="meta-grid">
+          <div class="meta-block"><h4>Starts when</h4><ul><li>Doc Sync hands over all four approved docs</li></ul></div>
+          <div class="meta-block"><h4>Uses (skills)</h4><ul>
+            <li><code>workspace-writer</code> — write code files</li>
+            <li><code>branch-committer</code> — branch, stage, commit, push (GitHub MCP)</li>
+          </ul></div>
+          <div class="meta-block"><h4>Guardrails</h4><ul>
+            <li><strong>G5</strong> secrets from env only · <strong>G4</strong> stay inside <code>data_model.entities</code></li>
+            <li><strong>G7</strong> build only what the plan covers · <strong>G2</strong> feature branch only, never merges</li>
+          </ul></div>
+          <div class="meta-block"><h4>Hooks</h4><ul>
+            <li>before-work: confirms all four docs exist</li>
+            <li>after-work: logs the branch + commits, Checkpoint <code>N/A</code></li>
+          </ul></div>
+        </div>
+        <p style="margin-top:14px;"><strong>Next</strong> → Review Agent</p>
+      </div>
+
+      <div class="agent-card" id="review-agent">
+        <div class="kicker">Capstone Step 6 — Review <span class="badge checkpoint">Chat approval</span></div>
+        <h3>Review Agent</h3>
+        <div class="file">.github/agents/review-agent.agent.md</div>
+        <p class="desc">
+          Reviews the implementation as a peer reviewer would, <strong>before the PR
+          exists</strong> — matching the capstone's "review before creating the PR" order.
+          Findings are written to a file, not posted anywhere yet.
+        </p>
+        <table>
+          <thead><tr><th>Area</th><th>What's checked</th></tr></thead>
+          <tbody>
+            <tr><td>Correctness</td><td>Behaves as <code>requirements.md</code> specifies</td></tr>
+            <tr><td>Security</td><td>No secrets in output; input validated</td></tr>
+            <tr><td>Error Handling</td><td>Failures, missing data, empty states handled</td></tr>
+            <tr><td>Test Coverage</td><td>Happy path <em>and</em> not-found / missing-field edges</td></tr>
+            <tr><td>Code Clarity</td><td>Self-explanatory names, easy-to-follow logic</td></tr>
+            <tr><td>DRY</td><td>Duplication worth refactoring</td></tr>
+            <tr><td>Dependency Safety</td><td>Known-vulnerable package versions</td></tr>
+          </tbody>
+        </table>
+        <div class="meta-grid">
+          <div class="meta-block"><h4>Uses (skills)</h4><ul><li><code>workspace-writer</code> — writes <code>code-review.md</code></li></ul></div>
+          <div class="meta-block"><h4>Guardrails</h4><ul>
+            <li><strong>G6</strong> findings only get posted (later, by Release) once the human says so</li>
+            <li><strong>G7</strong> stays in its lane — findings file only</li>
+          </ul></div>
+        </div>
+        <p style="margin-top:14px;"><strong>Next</strong> → Verify Agent</p>
+      </div>
+
+      <div class="agent-card" id="verify-agent">
+        <div class="kicker">Capstone Step 7 — Verify <span class="badge checkpoint">2 checkpoints</span></div>
+        <h3>Verify Agent</h3>
+        <div class="file">.github/agents/verify-agent.agent.md</div>
+        <p class="desc">
+          Verification is two halves, per the capstone: the <strong>code</strong>
+          (unit + integration tests against the running app) and the
+          <strong>documents</strong> (a content-quality pass over the four synced docs).
+          Also folds in standing the app up locally.
+        </p>
+        <div class="meta-grid">
+          <div class="meta-block"><h4>Uses (skills)</h4><ul>
+            <li><code>workspace-writer</code> — writes <code>verification.md</code></li>
+            <li><code>branch-committer</code> — commits generated tests</li>
+            <li><code>evidence-logger</code> — records human-reported pass/fail</li>
+          </ul></div>
+          <div class="meta-block"><h4>Reads from app-profile.yml</h4><ul>
+            <li><code>local_run.*</code> — install / build / start / url</li>
+            <li><code>quality.*</code> — test tool, tests path, evidence path</li>
+          </ul></div>
+          <div class="meta-block"><h4>Guardrails</h4><ul>
+            <li><strong>G4</strong> test results come only from the human, never fabricated</li>
+            <li><strong>G2</strong> tests committed to the branch; no push to base, no merge</li>
+          </ul></div>
+          <div class="meta-block"><h4>Checkpoints</h4><ul>
+            <li>Confirm test scope before generating</li>
+            <li>Wait for the human's pass/fail report</li>
+          </ul></div>
+        </div>
+        <p style="margin-top:14px;"><strong>Next</strong> → Release Agent</p>
+      </div>
+
+      <div class="agent-card" id="release-agent">
+        <div class="kicker">Capstone Step 8 — PR <span class="badge checkpoint">2 checkpoints</span></div>
+        <h3>Release Agent</h3>
+        <div class="file">.github/agents/release-agent.agent.md</div>
+        <p class="desc">
+          The culminating step: opens the pull request (only now — after build, review,
+          and verify), adds a changelog entry, and attaches the already-approved review
+          findings to the PR. The human always performs the merge.
+        </p>
+        <div class="meta-grid">
+          <div class="meta-block"><h4>Required PR sections</h4><ul>
+            <li>Summary</li><li>Changes Made</li><li>Test Evidence</li>
+            <li>Known Limitations</li><li>Reviewer Checklist</li>
+          </ul></div>
+          <div class="meta-block"><h4>Uses (skills)</h4><ul>
+            <li><code>branch-committer</code> — commits CHANGELOG.md</li>
+            <li><code>pull-request-opener</code> — opens the PR (GitHub MCP)</li>
+            <li><code>review-poster</code> — posts the Review Agent's findings</li>
+          </ul></div>
+          <div class="meta-block"><h4>Guardrails</h4><ul>
+            <li><strong>G6</strong> nothing posts before the human sees the exact content</li>
+            <li><strong>G2</strong> the merge is always a manual human action</li>
+          </ul></div>
+          <div class="meta-block"><h4>Checkpoints</h4><ul>
+            <li>Human okays the PR body + CHANGELOG before anything posts</li>
+            <li>Human merges the PR and confirms</li>
+          </ul></div>
+        </div>
+        <p style="margin-top:14px;"><strong>Next</strong> → Publish Agent</p>
+      </div>
+
+      <div class="agent-card" id="publish-agent">
+        <div class="kicker">Closing the loop <span class="badge checkpoint">Chat approval</span></div>
+        <h3>Publish Agent</h3>
+        <div class="file">.github/agents/publish-agent.agent.md</div>
+        <p class="desc">
+          Rolls every artifact the pipeline produced into one Confluence summary page —
+          the "sync" the use case is named for — so the work is discoverable outside the repo.
+        </p>
+        <div class="meta-grid">
+          <div class="meta-block"><h4>Page sections</h4><ul>
+            <li>Story Overview · Architecture &amp; Design · Code Changes</li>
+            <li>Review Outcome · Verification Results · PR Reference</li>
+          </ul></div>
+          <div class="meta-block"><h4>Uses (skills)</h4><ul>
+            <li><code>page-publisher</code> — create/update the page (Atlassian MCP)</li>
+            <li><code>workspace-writer</code> — final trace-log row</li>
+          </ul></div>
+          <div class="meta-block"><h4>Guardrails</h4><ul>
+            <li><strong>G3</strong> only this one page, only in the configured space, never deleted</li>
+            <li><strong>G4</strong> missing info is marked <code>[pending]</code>, never invented</li>
+          </ul></div>
+        </div>
+        <p style="margin-top:14px;"><strong>Next</strong> — none, the pipeline is complete 🎉</p>
+      </div>
+    </section>
+
+    <section id="subagents">
+      <h2 class="section-title">Documentation Sync sub-agents</h2>
+      <p class="lede">
+        Four narrow, single-purpose authors invoked only by the Documentation Sync agent —
+        never selectable directly from the picker. Each owns exactly one file and refuses to
+        touch any other author's output.
+      </p>
+
+      <div class="subagent-card">
+        <h4>1 · Requirements Author <span class="toc-chip">requirements-author.subagent.md</span></h4>
+        <p>Turns the intake story into <code>requirements.md</code> by asking five clarifying
+        questions in a single message (constraints, dependencies, definition of done, NFRs,
+        exclusions) and compiling the answers against <code>templates/requirements.template.md</code>.</p>
+        <p class="arrow">uses: workspace-writer → writes requirements.md → hands back to Doc Sync</p>
+      </div>
+
+      <div class="subagent-card">
+        <h4>2 · Architecture Author <span class="toc-chip">architecture-author.subagent.md</span></h4>
+        <p>Designs components, technology picks, and data flow for the approved requirements,
+        staying on the stack declared in <code>app-profile.yml</code> and never naming an entity
+        outside <code>data_model.entities</code>.</p>
+        <p class="arrow">uses: workspace-writer → writes architecture.md → hands back to Doc Sync</p>
+      </div>
+
+      <div class="subagent-card">
+        <h4>3 · Design Critic <span class="toc-chip">design-critic.subagent.md</span></h4>
+        <p>Acts as a senior reviewer of the architecture before any code exists — scoring it
+        through five lenses (correctness, security, scalability, scope, error handling) and
+        giving a verdict of APPROVED or NEEDS CHANGES.</p>
+        <p class="arrow">uses: workspace-writer → writes design-review.md → hands back to Doc Sync</p>
+      </div>
+
+      <div class="subagent-card">
+        <h4>4 · Work Planner <span class="toc-chip">work-planner.subagent.md</span></h4>
+        <p>Breaks the approved requirements + reviewed architecture into a dependency-ordered
+        task list with stable ids (T1, T2 …), effort ratings, and explicit blocked-task calls.</p>
+        <p class="arrow">uses: workspace-writer → writes impl-plan.md → hands back to Doc Sync</p>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2 class="section-title">Skills</h2>
+      <p class="lede">
+        Single-purpose, reusable actions. Agents never call an external system directly —
+        they always go through one of these seven skills, each scoped to exactly one job.
+      </p>
+      <div class="grid-3">
+        <div class="skill-card">
+          <h4>story-fetcher</h4>
+          <p class="label">Used by: Story Intake</p>
+          <p>Browses/fetches a Jira story, or reads one from Confluence/Word. Read-only — via the Atlassian MCP server.</p>
+        </div>
+        <div class="skill-card">
+          <h4>workspace-writer</h4>
+          <p class="label">Used by: almost every agent</p>
+          <p>Writes/updates a file in the repo safely. Local filesystem only; refuses <code>.env</code>, path escapes, empty content.</p>
+        </div>
+        <div class="skill-card">
+          <h4>branch-committer</h4>
+          <p class="label">Used by: Build, Verify, Publish</p>
+          <p>Cuts the feature branch, stages named files, commits, pushes — via the GitHub MCP server. Never pushes to base, never merges.</p>
+        </div>
+        <div class="skill-card">
+          <h4>pull-request-opener</h4>
+          <p class="label">Used by: Release</p>
+          <p>Opens the PR with the five required sections via the GitHub MCP server. Won't duplicate an existing PR.</p>
+        </div>
+        <div class="skill-card">
+          <h4>review-poster</h4>
+          <p class="label">Used by: Release</p>
+          <p>Posts the already-approved review findings as PR comments, tagged Issue/Suggestion. Never posts unconfirmed content.</p>
+        </div>
+        <div class="skill-card">
+          <h4>page-publisher</h4>
+          <p class="label">Used by: Publish</p>
+          <p>Creates or updates the one Confluence summary page for the story, via the Atlassian MCP server.</p>
+        </div>
+        <div class="skill-card">
+          <h4>evidence-logger</h4>
+          <p class="label">Used by: Verify</p>
+          <p>Records human-reported pass/fail counts into a dated evidence log. Never runs or fabricates test results itself.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="guardrails">
+      <h2 class="section-title">Guardrails (G1–G7)</h2>
+      <p class="lede">
+        One shared, numbered rulebook (<code>rules/guardrails.md</code>) that every agent and
+        sub-agent points to instead of restating. Change a rule once, it changes everywhere.
+      </p>
+      <div class="card">
+        <div class="guardrail">
+          <div class="g-id">G1</div>
+          <div><h4>Jira stays read-only</h4><p>Only Story Intake reaches Jira, and only to browse/fetch — never create, update, transition, comment, or delete.</p></div>
+        </div>
+        <div class="guardrail">
+          <div class="g-id">G2</div>
+          <div><h4>GitHub writes go through named skills only</h4><p>Commits via branch-committer, PRs via pull-request-opener, comments via review-poster. No agent ever merges — that's always a human action.</p></div>
+        </div>
+        <div class="guardrail">
+          <div class="g-id">G3</div>
+          <div><h4>Confluence: one page, one space</h4><p>Publish may only create/update the single summary page in the configured space — never delete, never stray elsewhere.</p></div>
+        </div>
+        <div class="guardrail">
+          <div class="g-id">G4</div>
+          <div><h4>Everything traces to a real source</h4><p>Every fact comes from the story, app-profile.yml, a file actually read, or a human answer. Gaps are marked <code>[pending]</code>, never invented. The data model is closed to <code>data_model.entities</code>.</p></div>
+        </div>
+        <div class="guardrail">
+          <div class="g-id">G5</div>
+          <div><h4>Secrets stay out</h4><p>No credentials in code or docs — environment or MCP server only. <code>.env</code> is never read, written, or committed.</p></div>
+        </div>
+        <div class="guardrail">
+          <div class="g-id">G6</div>
+          <div><h4>Checkpoints are real stops</h4><p>A skippable stage still needs explicit human consent, and the skip is logged. Nothing external (PR, comment, Confluence page) posts before the human has seen the exact content.</p></div>
+        </div>
+        <div class="guardrail">
+          <div class="g-id">G7</div>
+          <div><h4>Stay in your lane</h4><p>Each stage edits only the files it owns. A rejection routes back to the owning stage with a targeted patch — never a full regeneration, never a pipeline restart.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="hooks">
+      <h2 class="section-title">Lifecycle hooks</h2>
+      <p class="lede">
+        Two documentation-enforced hooks (<code>hooks/lifecycle-hooks.md</code>) every agent follows
+        as explicit steps — there is no background runner executing these.
+      </p>
+      <div class="hook-box">
+        <h4>before-work</h4>
+        <p>Runs before a stage does anything else: re-reads its own Inputs/Trigger, confirms
+        <code>app-profile.yml</code> has the fields it needs, and checks every named input file
+        exists on disk. If something required is missing, it halts and asks the human whether
+        to run the missing stage first or abort — it never guesses forward.</p>
+      </div>
+      <div class="hook-box">
+        <h4>after-work</h4>
+        <p>Fires once per top-level agent run (not per internal step). It appends one row per
+        internal step to <code>docs/&lt;STORY_ID&gt;/trace-log.md</code> in a single batched write,
+        then overwrites <code>docs/&lt;STORY_ID&gt;/handoff.md</code> with a snapshot of the last
+        finished stage, everything produced so far, and exactly which agent to pick next —
+        the resume point if a chat session ever dies mid-pipeline.</p>
+      </div>
+    </section>
+
+    <section id="config">
+      <h2 class="section-title">Configuration files</h2>
+      <p class="lede">What makes this pipeline work on <em>any</em> application, not just one.</p>
+      <div class="grid-2">
+        <div class="card">
+          <h3><code>config/app-profile.yml</code></h3>
+          <p>The single human-maintained description of the target app: name, tech stack,
+          <code>data_model.entities</code> (the closed list of things that exist), local run
+          commands, GitHub repo, Jira project, Confluence space, and test tooling. Every
+          agent reads this instead of inspecting source code — if a fact isn't here and
+          isn't in the story, the agent asks rather than guesses.</p>
+        </div>
+        <div class="card">
+          <h3><code>config/pipeline-settings.md</code></h3>
+          <p>Shared, non-secret knobs: branch/commit naming, the four synced-doc filenames
+          and their authors, required PR sections, the seven-area review checklist, the
+          Confluence page section order, and which stages can never be skipped
+          (Intake, Requirements, Build, Verify).</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="filemap">
+      <h2 class="section-title">File map</h2>
+      <pre><code>.github/
+  copilot-instructions.md        global principles, always on
+  agents/                        7 picker-selectable stage agents + conductor
+    conductor.agent.md
+    intake-agent.agent.md
+    doc-sync-agent.agent.md
+    build-agent.agent.md
+    review-agent.agent.md
+    verify-agent.agent.md
+    release-agent.agent.md
+    publish-agent.agent.md
+  subagents/                     4 doc-sync authors (invoked, not picker-selectable)
+    requirements-author.subagent.md
+    architecture-author.subagent.md
+    design-critic.subagent.md
+    work-planner.subagent.md
+  skills/                        7 single-purpose actions
+    story-fetcher.md
+    workspace-writer.md
+    branch-committer.md
+    pull-request-opener.md
+    review-poster.md
+    page-publisher.md
+    evidence-logger.md
+  templates/                     exact shape for each generated doc
+    requirements.template.md
+    architecture.template.md
+    design-review.template.md
+    impl-plan.template.md
+  rules/
+    guardrails.md                G1–G7
+  hooks/
+    lifecycle-hooks.md           before-work / after-work
+  config/
+    app-profile.yml              per-repo app facts (fill in once)
+    pipeline-settings.md         shared pipeline conventions
+  prompts/
+    run-pipeline.prompt.md       one-command entry point
+
+docs/
+  &lt;STORY_ID&gt;/                    one folder per story, e.g. EPM-CDME-TEST-42/
+    requirements.md
+    architecture.md
+    design-review.md
+    impl-plan.md
+    code-review.md
+    verification.md
+    trace-log.md
+    handoff.md</code></pre>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  Generated reference for the Agentic SDLC Pipeline (Automated Documentation Sync capstone).
+  Source of truth lives in <code>.github/</code> — this page is a human-readable summary of those files,
+  not a replacement for them.
+</footer>
+
+</body>
+</html>
