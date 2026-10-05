@@ -36,7 +36,12 @@ Confluence by `agents/publish-agent.agent.md`. The whole run is
 coordinated by `agents/conductor.agent.md`.
 
 ## Directory layout
-- `agents/` — picker-selectable stage agents plus the conductor
+- `agents/` — picker-selectable stage agents plus the conductor; each
+  holds routing only (role, trigger, inputs, outputs, next agent) and
+  links to its instructions file
+- `instructions/` — one `<agent>.instructions.md` per file in `agents/`,
+  holding that agent's behaviour: steps, rules, checkpoint, and its
+  guardrail and hook references
 - `subagents/` — the four documentation authors invoked by Doc Sync
 - `skills/` — single-purpose, reusable actions (fetch, write, commit, PR,
   comment, publish, log evidence)
@@ -84,6 +89,7 @@ coordinated by `agents/conductor.agent.md`.
 
 ## Where to look
 - Run control: `agents/conductor.agent.md`
+- Per-agent behaviour: `instructions/<agent>.instructions.md`
 - App facts: `config/app-profile.yml`
 - Settings: `config/pipeline-settings.md`
 - Guardrails: `rules/guardrails.md`

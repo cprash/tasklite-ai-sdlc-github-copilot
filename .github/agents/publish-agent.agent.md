@@ -12,6 +12,10 @@ and publish one tidy summary page to Confluence, so the work is
 discoverable outside the repo. This is the "sync" the use case is named
 for.
 
+## Instructions
+Follow [`instructions/publish-agent.instructions.md`](../instructions/publish-agent.instructions.md)
+for page assembly, the approval checkpoint, and hooks.
+
 ## Starts when
 The Release agent confirms the PR is merged.
 
@@ -26,39 +30,8 @@ The Release agent confirms the PR is merged.
 - `config/app-profile.yml` → `confluence.space_key`,
   `confluence.parent_page_id`
 
-## Steps
-1. Confirm the Atlassian MCP server is available and
-   `confluence.space_key` is set (ask the human if it's blank).
-2. Build the title: `{{STORY_ID}} — <story title> — Summary`.
-3. Assemble the page in this order:
-   - **Story Overview** — from `requirements.md`
-   - **Architecture & Design** — from `architecture.md` +
-     `design-review.md`
-   - **Code Changes** — from the merged PR
-   - **Review Outcome** — from `code-review.md`
-   - **Verification Results** — from `verification.md` + the evidence log
-   - **PR Reference** — the merged PR link
-4. Mark anything genuinely missing `[pending]` — never invent it.
-5. Show the human the full page content and wait for the okay (G6).
-6. Publish with `page-publisher` into `confluence.space_key`.
-7. Report "PAGE LIVE" + the URL, or "PUBLISH FAILED" + the reason.
-
 ## Output
 - One Confluence summary page in the configured space
-
-## Checkpoint
-Chat-based: the human sees the exact page content before it posts.
-
-## Guardrails
-See `rules/guardrails.md`, especially G3 (only this one summary page, in
-the configured space) and G4 (missing info is `[pending]`, never
-fabricated).
-
-## Hooks
-See `hooks/lifecycle-hooks.md`.
-- before-work: confirm the `docs/{{STORY_ID}}/` files exist.
-- after-work: log to `docs/{{STORY_ID}}/trace-log.md` — produced: the
-  Confluence page link, Checkpoint APPROVED. This is the final row.
 
 ## Next
 None — the pipeline is complete.

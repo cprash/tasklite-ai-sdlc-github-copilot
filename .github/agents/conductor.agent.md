@@ -12,15 +12,13 @@ the baton from one stage agent to the next and holding at every human
 checkpoint. The Conductor itself touches no external system — it only
 routes.
 
+## Instructions
+Follow [`instructions/conductor.instructions.md`](../instructions/conductor.instructions.md)
+for preflight, failure handling, and crash recovery.
+
 ## Start it
 Pick this agent, then give it a story id (`EPMCDMETST-<number>`), or
 give it nothing to browse the backlog first.
-
-## First, once per run
-Make sure `config/app-profile.yml` is filled in. If the essentials are
-blank — `app.name`, `tech`, `data_model.entities`, `local_run.start`,
-`github.repo` — ask the human to complete them before Intake runs. Every
-later stage depends on them.
 
 ## The flow
 ```
@@ -53,15 +51,15 @@ EPMCDMETST story (from Jira / Confluence / Word)
 ```
 
 ## The agents, in order
-| # | Capstone step | Agent |
-|---|---|---|
-| — | Intake | `agents/intake-agent.agent.md` |
-| 1–4 | Requirements · Architecture · Design Review · Impl Planning | `agents/doc-sync-agent.agent.md` (+ the four `subagents/*`) |
-| 5 | Implementation | `agents/build-agent.agent.md` |
-| 6 | Review | `agents/review-agent.agent.md` |
-| 7 | Verify | `agents/verify-agent.agent.md` |
-| 8 | PR | `agents/release-agent.agent.md` |
-| — | Doc sync to Confluence | `agents/publish-agent.agent.md` |
+| # | Capstone step | Agent | Instructions |
+|---|---|---|---|
+| — | Intake | `agents/intake-agent.agent.md` | `instructions/intake-agent.instructions.md` |
+| 1–4 | Requirements · Architecture · Design Review · Impl Planning | `agents/doc-sync-agent.agent.md` (+ the four `subagents/*`) | `instructions/doc-sync-agent.instructions.md` |
+| 5 | Implementation | `agents/build-agent.agent.md` | `instructions/build-agent.instructions.md` |
+| 6 | Review | `agents/review-agent.agent.md` | `instructions/review-agent.instructions.md` |
+| 7 | Verify | `agents/verify-agent.agent.md` | `instructions/verify-agent.instructions.md` |
+| 8 | PR | `agents/release-agent.agent.md` | `instructions/release-agent.instructions.md` |
+| — | Doc sync to Confluence | `agents/publish-agent.agent.md` | `instructions/publish-agent.instructions.md` |
 
 ## The skills they draw on
 `story-fetcher` · `workspace-writer` · `branch-committer` ·
@@ -83,32 +81,11 @@ Each of the four doc authors has its own chat approve/reject. Review
 needs a yes before its findings go anywhere; Verify waits for the
 human's pass/fail report; Release opens the PR only once the human
 okays the body, and the human does the merge; Publish shows the page
-content before posting. Detail lives in each agent's own Checkpoint
-section.
-
-## If a stage fails
-1. State the stage and the cause plainly.
-2. Offer to retry it, or skip it (only Architecture, Design Review, and
-   Implementation Planning are skippable — Intake, Requirements, Build,
-   and Verify are not).
-3. Re-run just that stage; never restart the whole pipeline.
-
-## If the session dies
-Don't rebuild context from memory. Open a fresh chat, read
-`docs/{{STORY_ID}}/handoff.md` (kept current by every stage's after-work
-hook), paste it in, and pick the agent it names. See
-`hooks/lifecycle-hooks.md`.
-
-## Guardrails
-`rules/guardrails.md` binds every delegated stage. The Conductor never
-calls Jira / GitHub / Confluence itself — it only hands off.
-
-## Hooks
-`hooks/lifecycle-hooks.md`. The Conductor doesn't run the hooks itself;
-each delegated agent runs its own, so `docs/{{STORY_ID}}/trace-log.md`
-ends up with one row per stage.
+content before posting. Detail lives in each agent's instruction file.
 
 ## Reference
+- Guardrails: `rules/guardrails.md`
+- Hooks: `hooks/lifecycle-hooks.md`
 - App facts: `config/app-profile.yml`
 - Settings: `config/pipeline-settings.md`
 - Environment: `.env.example`

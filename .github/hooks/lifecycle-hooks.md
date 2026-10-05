@@ -1,6 +1,6 @@
 ---
 name: Lifecycle Hooks
-description: The begin/finish steps every agent and sub-agent performs around its work. Referenced by number from each agent's Hooks section. These are followed as explicit steps — there is no background runner.
+description: The begin/finish steps every agent and sub-agent performs around its work. Referenced from each agent's Hooks section (for the eight stage agents, that section lives in their `instructions/` file). These are followed as explicit steps — there is no background runner.
 ---
 
 # Lifecycle Hooks
