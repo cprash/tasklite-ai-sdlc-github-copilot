@@ -11,8 +11,9 @@ always-on `copilot-instructions.md` holds the global principles; this
 file holds the enforceable detail.
 
 ## G1 — Jira stays read-only
-- Only the **Intake agent** reads Jira, and only through the Atlassian
-  MCP server via the `story-fetcher` skill.
+- Only the **Intake agent** reads Jira, and only through the `jira-epam`
+  MCP server (configured with `READ_ONLY_MODE=true`) via the
+  `story-fetcher` skill.
 - Reading means browsing the backlog or pulling one story. Creating,
   editing, transitioning, commenting on, or deleting an issue is never
   allowed — not even on request.

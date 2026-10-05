@@ -53,8 +53,10 @@ coordinated by `agents/conductor.agent.md`.
   written loose in `docs/` — always inside the story's own folder.
 
 ## External systems
-- **Jira** (project `EPMCDMETST`) and **Confluence** are reached only
-  through the **Atlassian MCP server**.
+- **Jira** (project `EPMCDMETST`) is reached only through the
+  **`jira-epam` MCP server** (read-only mode); **Confluence** only
+  through the **Atlassian MCP server**. Servers are declared in
+  `.vscode/mcp.json`.
 - **GitHub** (branches, commits, pull requests, comments) is reached only
   through the **GitHub MCP server**.
 - These servers hold their own credentials. Agent logic never handles

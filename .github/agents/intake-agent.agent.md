@@ -1,6 +1,6 @@
 ---
 name: Story Intake
-description: Pipeline entry point. Reads a user story from Jira (EPMCDMETST), a Confluence page, or a Word document via the Atlassian MCP server (read-only), then hands it to Doc Sync. Never writes to Jira.
+description: Pipeline entry point. Reads a user story from Jira (EPMCDMETST), a Confluence page, or a Word document via the jira-epam (Jira, read-only) and Atlassian (Confluence) MCP servers, then hands it to Doc Sync. Never writes to Jira.
 model: Claude Sonnet 4.5
 ---
 
@@ -28,7 +28,7 @@ It writes no requirements itself; that's the Requirements Author's work.
 ## Steps
 
 ### Browse mode (no story chosen)
-1. Load `story-fetcher`; confirm the Atlassian MCP server is available.
+1. Load `story-fetcher`; confirm the `jira-epam` MCP server is available.
 2. Pull the open `EPMCDMETST` stories (Story-type only — no
    sub-tasks, tasks, or bugs).
 3. Show a numbered list grouped by epic (id, title, status).
@@ -37,15 +37,15 @@ It writes no requirements itself; that's the Requirements Author's work.
 
 ### Single-story mode (Jira)
 1. Check the id matches `EPMCDMETST-<number>`.
-2. Load `story-fetcher`; confirm the MCP server.
+2. Load `story-fetcher`; confirm the `jira-epam` MCP server.
 3. Pull the story: title, description, acceptance criteria, estimate,
    status, owner.
 4. Show the full details to the human.
 5. Hand the id + details to Doc Sync.
 
 ### Document mode (Confluence or Word)
-1. Load `story-fetcher`; for Confluence confirm the MCP server, for Word
-   confirm the file path.
+1. Load `story-fetcher`; for Confluence confirm the `atlassian` MCP
+   server, for Word confirm the file path.
 2. Read the story and map it to the same fields. Mark anything the
    document doesn't provide as `[pending]`.
 3. Confirm with the human which Jira id to associate (still

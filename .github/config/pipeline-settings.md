@@ -6,9 +6,39 @@ commit. Anything that changes per application lives in
 Atlassian / GitHub MCP servers.
 
 ## Connectivity
-- Jira (read-only) and Confluence → **Atlassian MCP server**
+- Jira (read-only) → **`jira-epam` MCP server** (EPAM Jira)
+- Confluence → **Atlassian MCP server**
 - GitHub branches, commits, PRs, comments → **GitHub MCP server**
 - The pipeline never reads provider tokens directly.
+
+### MCP server setup
+The servers are declared in [`.vscode/mcp.json`](../../.vscode/mcp.json).
+No token is stored in the repo or `.env`: VS Code prompts for each one
+on first start and keeps it in its secret storage.
+
+| Server name | Transport | Auth | Used by |
+| --- | --- | --- | --- |
+| `jira-epam` | stdio (`uvx mcp-atlassian`), `READ_ONLY_MODE=true` | Jira personal access token | intake (Jira read) |
+| `atlassian` | remote HTTP, `https://mcp.atlassian.com/v1/mcp` | OAuth browser sign-in | intake (Confluence read), publish (Confluence write) |
+| `github` | remote HTTP, `https://api.githubcopilot.com/mcp/` | GitHub personal access token | build, review, release |
+
+Prerequisites: VS Code with GitHub Copilot Chat in Agent mode, and
+[`uv`](https://docs.astral.sh/uv/) installed (provides `uvx`).
+
+First-time setup (per developer):
+1. Create a Jira personal access token on `jiraeu.epam.com` and a GitHub
+   personal access token with repo scope.
+2. Open `.vscode/mcp.json` and click **Start** above each server, or run
+   **MCP: List Servers** from the Command Palette.
+3. Paste each token when prompted, and complete the Atlassian browser
+   sign-in for the site that holds the Confluence space.
+4. In the Chat tools picker, confirm the `jira-epam`, `atlassian`, and
+   `github` tools are enabled.
+
+`jira-epam` runs with `READ_ONLY_MODE=true`, so the read-only rule in
+`rules/guardrails.md` G1 is enforced by the connection, not only by
+agent instructions. The `atlassian` OAuth grant can also reach Jira
+writes, so keep Jira reads on `jira-epam`.
 
 ## Story identity
 - Jira project: `EPMCDMETST` (confirm against `jira.project_key`)

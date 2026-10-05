@@ -1,0 +1,39 @@
+{
+  "inputs": [
+    {
+      "id": "jira-personal-token",
+      "type": "promptString",
+      "description": "EPAM Jira personal access token",
+      "password": true
+    },
+    {
+      "id": "github-token",
+      "type": "promptString",
+      "description": "GitHub personal access token",
+      "password": true
+    }
+  ],
+  "servers": {
+    "atlassian": {
+      "type": "http",
+      "url": "https://mcp.atlassian.com/v1/mcp"
+    },
+    "jira-epam": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-atlassian"],
+      "env": {
+        "JIRA_URL": "https://jiraeu.epam.com",
+        "JIRA_PERSONAL_TOKEN": "${input:jira-personal-token}",
+        "READ_ONLY_MODE": "true"
+      }
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${input:github-token}"
+      }
+    }
+  }
+}
