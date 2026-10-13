@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "node .github/hooks/trim-atlassian-output.js",
+        "timeout": 10
+      }
+    ]
+  }
+}
